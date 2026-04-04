@@ -11,7 +11,7 @@ const CONFIG = window.APP_CONFIG || {};
         const STORAGE_KEY = CONFIG.storageKey || 'tarjetaLealtadCliente';
 
     const registerView = document.getElementById('registerView');
-    const appView = document.getElementById('appView');
+    const appView = document.getElementById('appView');renderCliente()
     const registerFeedback = document.getElementById('registerFeedback');
     const btnCrearCuenta = document.getElementById('btnCrearCuenta');
     const btnYaTengoCuenta = document.getElementById('btnYaTengoCuenta');
@@ -196,8 +196,8 @@ const CONFIG = window.APP_CONFIG || {};
       document.getElementById('perfilCorreo').textContent = safeText(c.correo, 'No registrado');
       document.getElementById('perfilId').textContent = safeText(c.id_cliente);
 
-      document.getElementById('pointsCount').textContent = Number(c.puntos || 0);
-      document.getElementById('goalCount').textContent = state.metaPuntos;
+      document.getElementById('heroPointsTop').textContent = Number(c.puntos || 0);
+      document.getElementById('heroGoalTop').textContent = state.metaPuntos;
       document.getElementById('metaId').textContent = `ID: ${safeText(c.id_cliente)}`;
       document.getElementById('metaEstado').textContent = `Estado: ${safeText(c.estado, 'ACTIVO')}`;
 
