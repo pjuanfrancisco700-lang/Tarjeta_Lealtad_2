@@ -84,14 +84,23 @@
 
         <div id="tabHome" class="tab-panel stack">
           <div class="card hero">
-            <p class="eyebrow">Tu tarjeta</p>
-            <h1 id="saludoNombre">Hola, cliente</h1>
-            <p id="heroText">Acumula 10 puntos y gana un café gratis.</p>
-            <div class="small-meta">
-              <span class="tiny-pill" id="metaId">ID: —</span>
-              <span class="tiny-pill" id="metaEstado">Estado: Activo</span>
-            </div>
-          </div>
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-progress"><span id="heroPointsTop">0</span>/<span id="heroGoalTop">10</span></div>
+
+  <div class="hero-content">
+    <p class="eyebrow">Tu tarjeta</p>
+    <h1 id="saludoNombre">Hola, cliente</h1>
+    <p id="heroText">Acumula 10 puntos y gana un café gratis.</p>
+
+    <div class="cups" id="cupsGrid"></div>
+
+    <div class="small-meta">
+      <span class="tiny-pill" id="metaId">ID: —</span>
+      <span class="tiny-pill" id="metaEstado">Estado: Activo</span>
+    </div>
+  </div>
+</div>
 
           <div class="card progress-wrap">
             <div class="progress-head">
