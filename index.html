@@ -2,188 +2,138 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tarjeta de Lealtad</title>
+
   <link rel="stylesheet" href="css/styles.css" />
 </head>
+
 <body>
-  <div class="app-shell">
-    <div class="phone">
-      <div class="status-space"></div>
 
-      <section id="registerView" class="register hidden">
-        <div class="register-hero">
-          <div class="brand">
-            <div class="brand-badge"><img class="brand-logo" src="assets/logo.svg" alt="Logo de la app" /></div>
-            <div class="brand-name">Café Urbano</div>
-          </div>
-          <div class="mt-18"></div>
-          <p class="eyebrow">Tarjeta digital</p>
-          <h1 class="register-title">Tu café también puede premiarte.</h1>
-          <p class="register-sub">Regístrate una sola vez, guarda tu tarjeta en este celular y acumula visitas para ganar tu café gratis.</p>
-        </div>
+  <!-- REGISTER VIEW -->
+  <div id="registerView" class="container">
+    <h2>Crear cuenta</h2>
+    <input id="nombre" placeholder="Tu nombre" />
+    <input id="contacto" placeholder="Teléfono o correo" />
+    <button id="btnCrearCuenta">Crear cuenta</button>
+    <button id="btnYaTengoCuenta">Ya tengo cuenta</button>
+    <p id="registerFeedback" class="feedback hidden"></p>
+  </div>
 
-        <div class="register-card">
-          <div class="field">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" type="text" placeholder="Tu nombre" autocomplete="name" />
-          </div>
+  <!-- APP VIEW -->
+  <div id="appView" class="container hidden">
 
-          <div class="field">
-            <label for="contacto">Teléfono o correo</label>
-            <input id="contacto" type="text" placeholder="Tu teléfono o correo" autocomplete="email tel" inputmode="email" />
-          </div>
-
-          <div class="register-actions">
-            <button class="primary-btn" id="btnCrearCuenta" type="button">Crear cuenta</button>
-            <div class="divider-text">o</div>
-            <button class="secondary-btn" id="btnYaTengoCuenta" type="button">Ya tengo cuenta</button>
-          </div>
-
-          <div id="registerFeedback" class="feedback error hidden"></div>
-
-          <p class="register-note">Tu cuenta quedará guardada en este dispositivo para que la próxima vez abras la app y veas directo tu tarjeta.</p>
-        </div>
-      </section>
-
-      <div id="loginModal" class="modal-overlay hidden">
-        <div class="modal-card">
-          <div class="modal-head">
-            <div>
-              <p class="eyebrow" style="margin-bottom:8px;">Ingresar</p>
-              <h3>Recupera tu tarjeta</h3>
-              <p>Ingresa tu teléfono, correo o ID para recuperar tu cuenta en este dispositivo.</p>
-            </div>
-            <button class="modal-close" id="btnCerrarModal" type="button">✕</button>
-          </div>
-
-          <div class="field">
-            <label for="loginIdCliente">Teléfono, correo o ID</label>
-            <input id="loginIdCliente" type="text" placeholder="Tu teléfono, correo o ID" autocomplete="username" />
-          </div>
-
-          <div id="loginFeedback" class="feedback error hidden"></div>
-
-          <div class="modal-actions">
-            <button class="primary-btn" id="btnIngresarCuenta" type="button">Ingresar</button>
-            <button class="secondary-btn" id="btnCancelarModal" type="button">Cancelar</button>
-          </div>
-
-          <p class="center-note" style="margin-top:0;">Puedes ingresar con el dato que recuerdes: teléfono, correo o ID del cliente.</p>
-        </div>
+    <!-- HEADER -->
+    <div class="header">
+      <div class="brand">
+        <img src="assets/logo.svg" class="brand-logo">
+        <span class="brand-name">Café Urbano</span>
       </div>
 
-      <section id="appView" class="screen hidden">
-        <div class="topbar">
-          <div class="brand">
-            <div class="brand-badge"><img class="brand-logo" src="assets/logo.svg" alt="Logo de la app" /></div>
-            <div class="brand-name">Café Urbano</div>
-          </div>
-          <button class="icon-btn" id="btnSalir" title="Cerrar sesión local" type="button">↺</button>
-        </div>
-
-        <div id="tabHome" class="tab-panel stack">
-          <div class="card hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-progress"><span id="heroPointsTop">0</span>/<span id="heroGoalTop">10</span></div>
-
-  <div class="hero-content">
-    <p class="eyebrow">Tu tarjeta</p>
-    <h1 id="saludoNombre">Hola, cliente</h1>
-    <p id="heroText">Acumula 10 puntos y gana un café gratis.</p>
-
-    <div class="cups" id="cupsGrid"></div>
-
-    <div class="small-meta">
-      <span class="tiny-pill" id="metaId">ID: —</span>
-      <span class="tiny-pill" id="metaEstado">Estado: Activo</span>
+      <button id="btnRefresh">⟳</button>
     </div>
-  </div>
-</div>
 
-         <div class="card qr-card">
-  <div class="qr-box">
-    <img id="qrImage" alt="QR del cliente" />
-  </div>
-  <strong class="qr-title">Muéstralo al finalizar tu compra</strong>
-  <p class="qr-text">El encargado lo escanea y actualiza tu progreso.</p>
-</div>
+    <!-- NAV -->
+    <div class="nav">
+      <button class="nav-btn active" data-tab="tabHome">Inicio</button>
+      <button class="nav-btn" data-tab="tabMovimientos">Movimientos</button>
+      <button class="nav-btn" data-tab="tabPerfil">Perfil</button>
+    </div>
 
-        <div id="tabMovimientos" class="tab-panel stack hidden">
-          <div class="section-title">
-            <h3>Movimientos recientes</h3>
-            <button class="mini-link" id="btnRefresh" type="button">Actualizar</button>
-          </div>
+    <!-- TAB HOME -->
+    <div id="tabHome" class="tab-panel stack">
 
-          <div class="card">
-            <div id="movimientosList"></div>
-          </div>
+      <!-- HERO (WALLET STYLE) -->
+      <div class="card hero">
+
+        <div class="hero-progress">
+          <span id="heroPointsTop">0</span>/<span id="heroGoalTop">10</span>
         </div>
 
-        <div id="tabPerfil" class="tab-panel stack hidden">
-          <div class="card">
-            <p class="eyebrow">Perfil</p>
-            <h3 style="margin:0; font-size:24px; letter-spacing:-0.04em;" id="perfilNombre">—</h3>
-            <p class="muted" style="margin-top:8px;">Esta cuenta está guardada en este dispositivo.</p>
+        <div class="hero-content">
+          <p class="eyebrow">Tu tarjeta</p>
 
-            <div class="mt-20 stack">
-              <div class="row-card">
-                <div class="row-left">
-                  <div class="row-icon">📱</div>
-                  <div>
-                    <strong>Teléfono</strong>
-                    <p id="perfilTelefono">—</p>
-                  </div>
-                </div>
-              </div>
+          <h1 id="saludoNombre">Hola, cliente</h1>
 
-              <div class="row-card">
-                <div class="row-left">
-                  <div class="row-icon">✉️</div>
-                  <div>
-                    <strong>Correo</strong>
-                    <p id="perfilCorreo">—</p>
-                  </div>
-                </div>
-              </div>
+          <p id="heroText">
+            Acumula 10 puntos y gana un café gratis.
+          </p>
 
-              <div class="row-card">
-                <div class="row-left">
-                  <div class="row-icon">🏷️</div>
-                  <div>
-                    <strong>ID del cliente</strong>
-                    <p id="perfilId">—</p>
-                  </div>
-                </div>
-              </div>
+          <p class="muted" id="faltanText">
+            Te faltan puntos para tu premio.
+          </p>
 
-              <div class="row-card">
-                <div class="row-left">
-                  <div class="row-icon">⭐</div>
-                  <div>
-                    <strong>Estado del premio</strong>
-                    <p id="perfilPremio">Sin premio disponible</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <!-- cups -->
+          <div class="cups" id="cupsGrid"></div>
+
+          <!-- meta -->
+          <div class="small-meta">
+            <span class="tiny-pill" id="metaId">ID: —</span>
+            <span class="tiny-pill" id="metaEstado">Estado: Activo</span>
           </div>
 
-          <button class="secondary-btn" id="btnBorrarCuenta" type="button">Borrar cuenta de este dispositivo</button>
-          <p class="center-note">Esto solo elimina la sesión local del teléfono. No borra el cliente en la base de datos.</p>
+          <!-- ocultos pero necesarios -->
+          <p class="hidden" id="promoTitle">Promoción base</p>
+          <p class="hidden" id="promoSubtitle">Acumula 10 puntos</p>
         </div>
 
-        <nav class="bottom-nav">
-          <button class="nav-btn active" data-tab="tabHome" type="button">🏠<span>Inicio</span></button>
-          <button class="nav-btn" data-tab="tabMovimientos" type="button">🕘<span>Movimientos</span></button>
-          <button class="nav-btn" data-tab="tabPerfil" type="button">👤<span>Perfil</span></button>
-        </nav>
-      </section>
+      </div>
+
+      <!-- QR -->
+      <div class="card qr-card">
+        <div class="qr-box">
+          <img id="qrImage" alt="QR del cliente" />
+        </div>
+
+        <strong class="qr-title">
+          Muéstralo al finalizar tu compra
+        </strong>
+
+        <p class="qr-text">
+          El encargado lo escanea y actualiza tu progreso.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- TAB MOVIMIENTOS -->
+    <div id="tabMovimientos" class="tab-panel stack hidden">
+      <div id="movimientosList"></div>
+    </div>
+
+    <!-- TAB PERFIL -->
+    <div id="tabPerfil" class="tab-panel stack hidden">
+
+      <div class="card">
+        <h3>Perfil</h3>
+        <p><strong>Nombre:</strong> <span id="perfilNombre"></span></p>
+        <p><strong>Teléfono:</strong> <span id="perfilTelefono"></span></p>
+        <p><strong>Correo:</strong> <span id="perfilCorreo"></span></p>
+        <p><strong>ID:</strong> <span id="perfilId"></span></p>
+        <p><strong>Premio:</strong> <span id="perfilPremio"></span></p>
+      </div>
+
+      <button id="btnSalir">Cerrar sesión</button>
+      <button id="btnBorrarCuenta">Borrar cuenta</button>
+
+    </div>
+
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div id="loginModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Ingresar</h3>
+      <input id="loginIdCliente" placeholder="Teléfono, correo o ID" />
+      <button id="btnIngresarCuenta">Ingresar</button>
+      <button id="btnCancelarModal">Cancelar</button>
+      <p id="loginFeedback" class="feedback hidden"></p>
     </div>
   </div>
 
+  <!-- JS -->
   <script src="js/config.js"></script>
   <script src="js/app.js"></script>
+
 </body>
 </html>
