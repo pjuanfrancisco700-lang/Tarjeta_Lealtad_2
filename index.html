@@ -887,8 +887,7 @@
       perfilId: document.getElementById('perfilId'),
       pointsCount: document.getElementById('pointsCount'),
       goalCount: document.getElementById('goalCount'),
-      metaId: document.getElementById('metaId'),
-      metaEstado: document.getElementById('metaEstado'),
+
       heroText: document.getElementById('heroText'),
       faltanText: document.getElementById('faltanText'),
       promoTitle: document.getElementById('promoTitle'),
@@ -1076,8 +1075,7 @@
 
       ui.pointsCount.textContent = puntos;
       ui.goalCount.textContent = meta;
-      ui.metaId.textContent = `ID: ${safeText(c.id_cliente)}`;
-      ui.metaEstado.textContent = `Estado: ${safeText(c.estado, 'ACTIVO')}`;
+
 
       ui.heroText.textContent = 'Tu tarjeta está activa.';
 
