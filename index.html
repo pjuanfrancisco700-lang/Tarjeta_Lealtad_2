@@ -2,26 +2,27 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Tarjeta de Lealtad</title>
-
   <style>
     :root {
-      --bg: #f6f2ec;
+      --bg: #f3f4f6;
+      --bg-soft: #fafafa;
       --card: rgba(255, 255, 255, 0.78);
-      --card-strong: #ffffff;
-      --text: #2a211c;
-      --muted: #7b6e66;
-      --line: rgba(60, 40, 25, 0.08);
-      --accent: #6f4e37;
-      --success: #658f5d;
-      --danger: #b85d5d;
-      --shadow: 0 14px 36px rgba(42, 33, 28, 0.08);
-      --radius-xl: 28px;
-      --maxw: 420px;
+      --card-strong: rgba(255,255,255,0.94);
+      --text: #111215;
+      --muted: #6b7280;
+      --line: rgba(17, 18, 21, 0.08);
+      --line-strong: rgba(17, 18, 21, 0.12);
+      --accent: #111215;
+      --accent-soft: rgba(17, 18, 21, 0.06);
+      --success: #2f855a;
+      --danger: #c53030;
+      --shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+      --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.05);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --maxw: 430px;
     }
 
     * {
@@ -36,14 +37,15 @@
       -webkit-text-size-adjust: 100%;
     }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       min-height: 100vh;
       min-height: 100dvh;
       overflow-x: hidden;
-      background: radial-gradient(circle at top, #fff8f1 0%, var(--bg) 48%, #efe7de 100%);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0) 26%),
+        linear-gradient(180deg, #f8f8f8 0%, #eef1f4 100%);
       color: var(--text);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
@@ -63,11 +65,12 @@
     .phone {
       width: 100%;
       min-height: calc(100dvh - max(12px, env(safe-area-inset-top)) - max(18px, env(safe-area-inset-bottom)) - 24px);
-      border-radius: 34px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.5) 100%);
-      border: 1px solid rgba(255,255,255,0.65);
-      box-shadow: 0 24px 70px rgba(42, 33, 28, 0.1);
-      backdrop-filter: blur(18px);
+      border-radius: 38px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.58) 100%);
+      border: 1px solid rgba(255,255,255,0.75);
+      box-shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
       overflow: hidden;
       position: relative;
     }
@@ -98,46 +101,40 @@
 
     .brand-badge,
     .icon-btn {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
       display: grid;
       place-items: center;
-      background: rgba(255,255,255,0.66);
-      border: 1px solid var(--line);
-      box-shadow: 0 8px 16px rgba(42,33,28,0.05);
-      overflow: hidden;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(17,18,21,0.06);
+      box-shadow: var(--shadow-soft);
+      color: var(--text);
     }
 
-    .brand-logo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .brand-name {
-      font-weight: 700;
-      letter-spacing: -0.03em;
+    .brand-badge {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
     }
 
     .icon-btn {
       cursor: pointer;
-      font-size: 18px;
-      color: var(--text);
+      font-size: 15px;
     }
 
     .card {
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,0.8);
+      background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.68));
+      border: 1px solid rgba(255,255,255,0.88);
       box-shadow: var(--shadow);
       border-radius: var(--radius-xl);
-      padding: 14px;
-      backdrop-filter: blur(14px);
+      padding: 16px;
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
     }
 
     .hero {
-      background: linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(247,240,232,0.84) 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(244,246,248,0.82) 100%);
     }
 
     .eyebrow {
@@ -151,16 +148,17 @@
     .hero h1,
     .register-title {
       margin: 0;
-      font-size: 29px;
-      line-height: 1.02;
-      letter-spacing: -0.06em;
+      font-size: 31px;
+      line-height: 0.98;
+      letter-spacing: -0.07em;
+      font-weight: 800;
     }
 
     .hero p,
     .register-sub {
       color: var(--muted);
-      margin: 8px 0 0;
-      line-height: 1.45;
+      margin: 10px 0 0;
+      line-height: 1.5;
       font-size: 13px;
     }
 
@@ -174,7 +172,7 @@
 
     .progress-wrap {
       display: grid;
-      gap: 10px;
+      gap: 12px;
     }
 
     .progress-head {
@@ -204,25 +202,25 @@
     .cups {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      gap: 10px;
     }
 
     .cup {
       aspect-ratio: 1;
-      border-radius: 15px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(17,18,21,0.06);
       display: grid;
       place-items: center;
-      font-size: 19px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+      font-size: 17px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
       transition: 0.2s ease;
     }
 
     .cup.filled {
-      background: linear-gradient(180deg, #7d5a42 0%, #5f4331 100%);
-      color: #fff7ef;
-      border-color: rgba(95, 67, 49, 0.42);
+      background: linear-gradient(180deg, #1f2937 0%, #111215 100%);
+      color: #ffffff;
+      border-color: rgba(17, 18, 21, 0.28);
       transform: translateY(-1px);
     }
 
@@ -231,15 +229,16 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding: 11px 13px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(111,78,55,0.1), rgba(111,78,55,0.06));
-      border: 1px solid rgba(111,78,55,0.1);
+      padding: 14px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(17,18,21,0.04), rgba(17,18,21,0.02));
+      border: 1px solid rgba(17,18,21,0.06);
     }
 
     .promo strong {
       display: block;
       font-size: 14px;
+      letter-spacing: -0.02em;
     }
 
     .promo span {
@@ -258,10 +257,10 @@
       aspect-ratio: 1;
       margin: 0 auto 12px;
       background: var(--card-strong);
-      border-radius: 24px;
-      padding: 14px;
-      border: 1px solid var(--line);
-      box-shadow: 0 16px 34px rgba(42, 33, 28, 0.08);
+      border-radius: 28px;
+      padding: 16px;
+      border: 1px solid rgba(17,18,21,0.06);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
       display: grid;
       place-items: center;
     }
@@ -332,11 +331,12 @@
       width: 42px;
       height: 42px;
       border-radius: 14px;
-      background: rgba(111,78,55,0.08);
+      background: rgba(17,18,21,0.05);
+      border: 1px solid rgba(17,18,21,0.05);
       display: grid;
       place-items: center;
       flex-shrink: 0;
-      font-size: 18px;
+      font-size: 17px;
     }
 
     .row-card strong,
@@ -358,8 +358,8 @@
       border-radius: 999px;
       font-size: 12px;
       font-weight: 700;
-      background: rgba(101, 143, 93, 0.12);
-      color: var(--success);
+      background: rgba(17,18,21,0.06);
+      color: var(--text);
       white-space: nowrap;
     }
 
@@ -367,8 +367,8 @@
     .secondary-btn {
       width: 100%;
       border: none;
-      border-radius: 18px;
-      padding: 14px 16px;
+      border-radius: 20px;
+      padding: 15px 16px;
       font-size: 15px;
       font-weight: 800;
       letter-spacing: -0.02em;
@@ -377,15 +377,16 @@
     }
 
     .primary-btn {
-      background: linear-gradient(180deg, #7b5b44, #5f4331);
-      color: #fffaf5;
-      box-shadow: 0 18px 30px rgba(111,78,55,0.22);
+      background: linear-gradient(180deg, #1f2937, #111215);
+      color: #ffffff;
+      box-shadow: 0 18px 30px rgba(17,18,21,0.18);
     }
 
     .secondary-btn {
-      background: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.8);
       color: var(--text);
-      border: 1px solid var(--line);
+      border: 1px solid rgba(17,18,21,0.06);
+      box-shadow: var(--shadow-soft);
     }
 
     .primary-btn:active,
@@ -413,13 +414,15 @@
     }
 
     .register-card {
-      background: rgba(255,255,255,0.8);
-      border: 1px solid rgba(255,255,255,0.82);
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.9);
       box-shadow: var(--shadow);
-      border-radius: 28px;
-      padding: 14px;
+      border-radius: 32px;
+      padding: 16px;
       display: grid;
-      gap: 10px;
+      gap: 12px;
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
     }
 
     .field {
@@ -435,18 +438,19 @@
 
     .field input {
       width: 100%;
-      border: 1px solid rgba(60, 40, 25, 0.09);
-      background: rgba(255,255,255,0.9);
-      border-radius: 16px;
-      padding: 13px 14px;
+      border: 1px solid rgba(17,18,21,0.06);
+      background: rgba(248,250,252,0.92);
+      border-radius: 18px;
+      padding: 14px 15px;
       font-size: 15px;
       outline: none;
       color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
     }
 
     .field input:focus {
-      border-color: rgba(111,78,55,0.36);
-      box-shadow: 0 0 0 4px rgba(111,78,55,0.08);
+      border-color: rgba(17,18,21,0.14);
+      box-shadow: 0 0 0 4px rgba(17,18,21,0.05);
     }
 
     .register-note {
@@ -475,6 +479,53 @@
       border: 1px solid rgba(101, 143, 93, 0.14);
     }
 
+    .bottom-nav {
+      position: sticky;
+      bottom: 0;
+      margin-top: 14px;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: 0 20px 40px rgba(15,23,42,0.1);
+      border-radius: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 8px;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      border: none;
+      background: transparent;
+      border-radius: 18px;
+      padding: 10px 8px;
+      cursor: pointer;
+      display: grid;
+      gap: 5px;
+      justify-items: center;
+      color: #8b93a1;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-btn.active {
+      background: rgba(17,18,21,0.06);
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+
     .small-meta {
       display: flex;
       gap: 8px;
@@ -487,8 +538,9 @@
       border-radius: 999px;
       font-size: 11px;
       color: var(--muted);
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(17,18,21,0.06);
+      box-shadow: var(--shadow-soft);
     }
 
     .center-note {
@@ -568,59 +620,6 @@
       flex-shrink: 0;
     }
 
-    /* MENU INFERIOR NUEVO */
-    .bottom-nav {
-      position: sticky;
-      bottom: 0;
-      margin-top: 10px;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255,255,255,0.92);
-      box-shadow: 0 10px 28px rgba(42,33,28,0.07);
-      border-radius: 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      padding: 6px;
-      gap: 6px;
-    }
-
-    .nav-btn {
-      border: none;
-      background: transparent;
-      border-radius: 14px;
-      padding: 7px 4px 6px;
-      cursor: pointer;
-      display: grid;
-      gap: 3px;
-      justify-items: center;
-      color: #8a7d75;
-      font-weight: 700;
-      font-size: 10px;
-      line-height: 1.1;
-      transition: transform 0.16s ease, background 0.16s ease, color 0.16s ease;
-    }
-
-    .nav-btn svg {
-      width: 21px;
-      height: 21px;
-      display: block;
-    }
-
-    .nav-btn span {
-      font-size: 10px;
-      letter-spacing: -0.01em;
-    }
-
-    .nav-btn.active {
-      background: rgba(111,78,55,0.08);
-      color: #2a211c;
-    }
-
-    .nav-btn:active {
-      transform: scale(0.96);
-    }
-
     @media (max-width: 380px) {
       .hero h1,
       .register-title {
@@ -663,18 +662,13 @@
       <section id="registerView" class="register hidden">
         <div class="register-hero">
           <div class="brand">
-            <div class="brand-badge">
-              <img class="brand-logo" src="assets/logo.svg" alt="Logo de la app" />
-            </div>
-            <div class="brand-name">Café Urbano</div>
+            <div class="brand-badge">CU</div>
+            <div>Café Urbano</div>
           </div>
-
           <div class="mt-18"></div>
           <p class="eyebrow">Tarjeta digital</p>
           <h1 class="register-title">Tu café también puede premiarte.</h1>
-          <p class="register-sub">
-            Regístrate una sola vez, guarda tu tarjeta en este celular y acumula visitas para ganar tu café gratis.
-          </p>
+          <p class="register-sub">Regístrate una sola vez, guarda tu tarjeta en este celular y acumula visitas para ganar tu café gratis.</p>
         </div>
 
         <div class="register-card">
@@ -685,13 +679,7 @@
 
           <div class="field">
             <label for="contacto">Teléfono o correo</label>
-            <input
-              id="contacto"
-              type="text"
-              placeholder="Tu teléfono o correo"
-              autocomplete="email tel"
-              inputmode="email"
-            />
+            <input id="contacto" type="text" placeholder="Tu teléfono o correo" autocomplete="email tel" inputmode="email" />
           </div>
 
           <div class="register-actions">
@@ -702,9 +690,7 @@
 
           <div id="registerFeedback" class="feedback error hidden"></div>
 
-          <p class="register-note">
-            Tu cuenta quedará guardada en este dispositivo para que la próxima vez abras la app y veas directo tu tarjeta.
-          </p>
+          <p class="register-note">Tu cuenta quedará guardada en este dispositivo para que la próxima vez abras la app y veas directo tu tarjeta.</p>
         </div>
       </section>
 
@@ -721,12 +707,7 @@
 
           <div class="field">
             <label for="loginIdCliente">Teléfono, correo o ID</label>
-            <input
-              id="loginIdCliente"
-              type="text"
-              placeholder="Tu teléfono, correo o ID"
-              autocomplete="username"
-            />
+            <input id="loginIdCliente" type="text" placeholder="Tu teléfono, correo o ID" autocomplete="username" />
           </div>
 
           <div id="loginFeedback" class="feedback error hidden"></div>
@@ -736,27 +717,24 @@
             <button class="secondary-btn" id="btnCancelarModal" type="button">Cancelar</button>
           </div>
 
-          <p class="center-note" style="margin-top:0;">
-            Puedes ingresar con el dato que recuerdes: teléfono, correo o ID del cliente.
-          </p>
+          <p class="center-note" style="margin-top:0;">Puedes ingresar con el dato que recuerdes: teléfono, correo o ID del cliente.</p>
         </div>
       </div>
 
       <section id="appView" class="screen hidden">
         <div class="topbar">
           <div class="brand">
-            <div class="brand-badge">
-              <img class="brand-logo" src="assets/logo.svg" alt="Logo de la app" />
-            </div>
-            <div class="brand-name">Café Urbano</div>
+            <div class="brand-badge">CU</div>
+            <div>Café Urbano</div>
           </div>
-          <button class="icon-btn" id="btnSalir" title="Cerrar sesión local" type="button">↺</button>
+          <button class="icon-btn" id="btnSalir" title="Cerrar sesión local" type="button">⌂</button>
         </div>
 
         <div id="tabHome" class="tab-panel stack">
           <div class="card hero">
+            <p class="eyebrow">Tu tarjeta</p>
             <h1 id="saludoNombre">Hola, cliente</h1>
-            <p id="heroText">Tu tarjeta está activa.</p>
+            <p id="heroText">Acumula 10 puntos y gana un café gratis.</p>
             <div class="small-meta">
               <span class="tiny-pill" id="metaId">ID: —</span>
               <span class="tiny-pill" id="metaEstado">Estado: Activo</span>
@@ -771,15 +749,13 @@
               </div>
               <div class="big-points"><strong id="pointsCount">0</strong> / <span id="goalCount">10</span></div>
             </div>
-
             <div class="cups" id="cupsGrid"></div>
-
             <div class="promo">
               <div>
                 <strong id="promoTitle">Promoción base</strong>
                 <span id="promoSubtitle">Acumula 10 puntos y gana un café gratis.</span>
               </div>
-              <div style="font-size:26px">🎁</div>
+              <div style="font-size:22px; color:var(--text); opacity:.9;">✦</div>
             </div>
           </div>
 
@@ -788,12 +764,8 @@
             <div class="qr-box">
               <img id="qrImage" alt="QR del cliente" />
             </div>
-            <strong style="display:block; font-size:18px; letter-spacing:-0.03em;">
-              Muéstralo al finalizar tu compra
-            </strong>
-            <p class="muted">
-              El encargado lo escanea, valida el punto y tu progreso se actualiza en la tarjeta.
-            </p>
+            <strong style="display:block; font-size:18px; letter-spacing:-0.03em;">Muéstralo al finalizar tu compra</strong>
+            <p class="muted">El encargado lo escanea, valida el punto y tu progreso se actualiza en la tarjeta.</p>
           </div>
         </div>
 
@@ -857,38 +829,21 @@
             </div>
           </div>
 
-          <button class="secondary-btn" id="btnBorrarCuenta" type="button">
-            Borrar cuenta de este dispositivo
-          </button>
-          <p class="center-note">
-            Esto solo elimina la sesión local del teléfono. No borra el cliente en la base de datos.
-          </p>
+          <button class="secondary-btn" id="btnBorrarCuenta" type="button">Borrar cuenta de este dispositivo</button>
+          <p class="center-note">Esto solo elimina la sesión local del teléfono. No borra el cliente en la base de datos.</p>
         </div>
 
         <nav class="bottom-nav">
           <button class="nav-btn active" data-tab="tabHome" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 10.5 12 3l9 7.5"></path>
-              <path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"></path>
-            </svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5.5 9.5V20h13V9.5"></path></svg>
             <span>Inicio</span>
           </button>
-
           <button class="nav-btn" data-tab="tabMovimientos" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3.5" y="4.5" width="17" height="16" rx="3"></rect>
-              <path d="M3.5 10h17"></path>
-              <path d="M8 14h3"></path>
-              <path d="M8 17.5h6"></path>
-            </svg>
-            <span>Movs</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h8"></path><path d="M8 12h8"></path><path d="M8 17h5"></path><rect x="4" y="4" width="16" height="16" rx="4"></rect></svg>
+            <span>Movimientos</span>
           </button>
-
           <button class="nav-btn" data-tab="tabPerfil" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="8" r="4"></circle>
-              <path d="M4.5 20a7.5 7.5 0 0 1 15 0"></path>
-            </svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="8" r="4"></circle></svg>
             <span>Perfil</span>
           </button>
         </nav>
@@ -917,10 +872,30 @@
     const contactoInput = document.getElementById('contacto');
     const nombreInput = document.getElementById('nombre');
 
+    const ui = {
+      saludoNombre: document.getElementById('saludoNombre'),
+      perfilNombre: document.getElementById('perfilNombre'),
+      perfilTelefono: document.getElementById('perfilTelefono'),
+      perfilCorreo: document.getElementById('perfilCorreo'),
+      perfilId: document.getElementById('perfilId'),
+      pointsCount: document.getElementById('pointsCount'),
+      goalCount: document.getElementById('goalCount'),
+      metaId: document.getElementById('metaId'),
+      metaEstado: document.getElementById('metaEstado'),
+      heroText: document.getElementById('heroText'),
+      faltanText: document.getElementById('faltanText'),
+      promoTitle: document.getElementById('promoTitle'),
+      promoSubtitle: document.getElementById('promoSubtitle'),
+      perfilPremio: document.getElementById('perfilPremio'),
+      qrImage: document.getElementById('qrImage'),
+      cupsGrid: document.getElementById('cupsGrid'),
+      movimientosList: document.getElementById('movimientosList')
+    };
+
     const state = {
       cliente: null,
       metaPuntos: 10,
-      recompensa: 'Café gratis',
+      recompensa: 'café gratis',
       negocio: 'Café Urbano',
       movimientos: []
     };
@@ -935,6 +910,8 @@
         registerFeedback.className = `feedback ${type}`;
         registerFeedback.classList.remove('hidden');
       } else {
+        registerFeedback.textContent = '';
+        registerFeedback.className = 'feedback error hidden';
         registerFeedback.classList.add('hidden');
       }
     }
@@ -947,14 +924,16 @@
 
     function openLoginModal() {
       loginModal.classList.remove('hidden');
-      loginFeedback.classList.add('hidden');
+      loginFeedback.textContent = '';
+      loginFeedback.className = 'feedback error hidden';
       loginIdCliente.value = '';
       setTimeout(() => loginIdCliente.focus(), 50);
     }
 
     function closeLoginModal() {
       loginModal.classList.add('hidden');
-      loginFeedback.classList.add('hidden');
+      loginFeedback.textContent = '';
+      loginFeedback.className = 'feedback error hidden';
       loginIdCliente.value = '';
     }
 
@@ -976,20 +955,30 @@
       }
     }
 
+    function clearLocalCliente() {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
     function clearFormInputs() {
-  if (nombreInput) nombreInput.value = '';
-  if (contactoInput) contactoInput.value = '';
-  if (loginIdCliente) loginIdCliente.value = '';
-}
+      if (nombreInput) nombreInput.value = '';
+      if (contactoInput) contactoInput.value = '';
+      if (loginIdCliente) loginIdCliente.value = '';
+    }
 
     function safeText(value, fallback = '—') {
       return value && String(value).trim() ? String(value).trim() : fallback;
+    }
+
+    function safeNumber(value, fallback = 0) {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : fallback;
     }
 
     function formatDate(value) {
       if (!value) return 'Sin movimientos todavía';
       const date = new Date(value);
       if (Number.isNaN(date.getTime())) return safeText(value, 'Sin fecha');
+
       return date.toLocaleString('es-GT', {
         year: 'numeric',
         month: 'short',
@@ -1000,7 +989,8 @@
     }
 
     function buildQrData(id) {
-      const targetUrl = `https://pjuanfrancisco700-lang.github.io/Confirmar_punto/?id=${encodeURIComponent(id)}`;
+      const cleanId = safeText(id, '');
+      const targetUrl = `https://pjuanfrancisco700-lang.github.io/Confirmar_punto/?id=${encodeURIComponent(cleanId)}`;
       return `https://api.qrserver.com/v1/create-qr-code/?size=420x420&data=${encodeURIComponent(targetUrl)}`;
     }
 
@@ -1013,24 +1003,24 @@
     }
 
     function renderCups(points, goal) {
-      const cupsGrid = document.getElementById('cupsGrid');
-      cupsGrid.innerHTML = '';
-      const total = Math.max(goal, 10);
+      ui.cupsGrid.innerHTML = '';
+      const safeGoal = Math.max(1, safeNumber(goal, 10));
+      const safePoints = Math.max(0, safeNumber(points, 0));
+      const total = Math.max(safeGoal, 10);
 
       for (let i = 1; i <= total; i += 1) {
         const item = document.createElement('div');
-        item.className = `cup ${i <= points ? 'filled' : ''}`;
+        item.className = `cup ${i <= safePoints ? 'filled' : ''}`;
         item.textContent = '☕';
-        cupsGrid.appendChild(item);
+        ui.cupsGrid.appendChild(item);
       }
     }
 
     function renderMovimientos() {
-      const container = document.getElementById('movimientosList');
-      container.innerHTML = '';
+      ui.movimientosList.innerHTML = '';
 
-      if (!state.movimientos.length) {
-        container.innerHTML = `
+      if (!Array.isArray(state.movimientos) || !state.movimientos.length) {
+        ui.movimientosList.innerHTML = `
           <div class="row-card">
             <div class="row-left">
               <div class="row-icon">🧾</div>
@@ -1058,7 +1048,7 @@
           </div>
           <div class="pill">${isSuma ? '+1 punto' : 'Canje'}</div>
         `;
-        container.appendChild(row);
+        ui.movimientosList.appendChild(row);
       });
     }
 
@@ -1066,16 +1056,229 @@
       const c = state.cliente;
       if (!c) return;
 
-      document.getElementById('saludoNombre').textContent = `Hola, ${safeText(c.nombre, 'cliente')}`;
-      document.getElementById('perfilNombre').textContent = safeText(c.nombre);
-      document.getElementById('perfilTelefono').textContent = safeText(c.telefono, 'No registrado');
-      document.getElementById('perfilCorreo').textContent = safeText(c.correo, 'No registrado');
-      document.getElementById('perfilId').textContent = safeText(c.id_cliente);
-
-      document.getElementById('pointsCount').textContent = Number(c.puntos || 0);
-      document.getElementById('goalCount').textContent = state.metaPuntos;
-      document.getElementById('metaId').textContent = `ID: ${safeText(c.id_cliente)}`;
-      document.getElementById('metaEstado').textContent = `Estado: ${safeText(c.estado, 'ACTIVO')}`;
-
+      const puntos = Math.max(0, safeNumber(c.puntos, 0));
+      const meta = Math.max(1, safeNumber(state.metaPuntos, 10));
       const premioDisponible = String(c.premio_disponible || 'NO').toUpperCase() === 'SI';
-      const faltan = Math.max(0, state.metaPuntos -
+      const faltan = Math.max(0, meta - puntos);
+
+      ui.saludoNombre.textContent = `Hola, ${safeText(c.nombre, 'cliente')}`;
+      ui.perfilNombre.textContent = safeText(c.nombre);
+      ui.perfilTelefono.textContent = safeText(c.telefono, 'No registrado');
+      ui.perfilCorreo.textContent = safeText(c.correo, 'No registrado');
+      ui.perfilId.textContent = safeText(c.id_cliente);
+
+      ui.pointsCount.textContent = puntos;
+      ui.goalCount.textContent = meta;
+      ui.metaId.textContent = `ID: ${safeText(c.id_cliente)}`;
+      ui.metaEstado.textContent = `Estado: ${safeText(c.estado, 'ACTIVO')}`;
+
+      ui.heroText.textContent = premioDisponible
+        ? 'Tu tarjeta está activa.'
+        : `Acumula ${meta} puntos y gana un ${state.recompensa}.`;
+
+      ui.faltanText.textContent = premioDisponible
+        ? 'Ya puedes reclamar tu recompensa en caja.'
+        : faltan === 0
+          ? 'Ya casi: tu recompensa está lista para activarse.'
+          : `Te faltan ${faltan} punto${faltan === 1 ? '' : 's'} para tu premio.`;
+
+      ui.promoTitle.textContent = premioDisponible ? 'Premio disponible' : 'Promoción base';
+      ui.promoSubtitle.textContent = premioDisponible
+        ? `Tienes un ${state.recompensa} listo para canjear.`
+        : `Acumula ${meta} puntos y gana un ${state.recompensa}.`;
+
+      ui.perfilPremio.textContent = premioDisponible
+        ? `Tienes un ${state.recompensa} disponible.`
+        : 'Sin premio disponible';
+
+      ui.qrImage.src = buildQrData(c.id_cliente);
+      ui.qrImage.alt = `QR de ${safeText(c.nombre, 'cliente')}`;
+
+      renderCups(puntos, meta);
+      renderMovimientos();
+    }
+
+    function setActiveTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach((panel) => {
+        panel.classList.toggle('hidden', panel.id !== tabId);
+      });
+
+      document.querySelectorAll('.nav-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.tab === tabId);
+      });
+    }
+
+    async function apiRequest(params) {
+      const url = new URL(API_URL);
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          url.searchParams.set(key, value);
+        }
+      });
+
+      const response = await fetch(url.toString(), { method: 'GET' });
+      if (!response.ok) throw new Error('No se pudo conectar con el servicio.');
+      return response.json();
+    }
+
+    async function cargarClienteDesdeServidor(identificador) {
+      const data = await apiRequest({ accion: 'obtenerCliente', id_cliente: identificador });
+      if (!data || data.ok === false || !data.cliente) {
+        throw new Error(data?.error || 'No encontramos esa cuenta.');
+      }
+
+      state.cliente = data.cliente;
+      state.metaPuntos = safeNumber(data.metaPuntos, 10);
+      state.recompensa = safeText(data.recompensa, 'café gratis');
+      state.negocio = safeText(data.negocio, 'Café Urbano');
+      state.movimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
+
+      saveLocalCliente(state.cliente);
+      renderCliente();
+      showApp();
+      setActiveTab('tabHome');
+    }
+
+    async function crearCuenta() {
+      const nombre = safeText(nombreInput.value, '');
+      const contacto = safeText(contactoInput.value, '');
+
+      if (!nombre) {
+        showRegister('Ingresa tu nombre para crear tu tarjeta.');
+        nombreInput.focus();
+        return;
+      }
+
+      if (!contacto) {
+        showRegister('Ingresa tu teléfono o correo para crear tu tarjeta.');
+        contactoInput.focus();
+        return;
+      }
+
+      btnCrearCuenta.disabled = true;
+      btnCrearCuenta.textContent = 'Creando...';
+
+      try {
+        const { telefono, correo } = parseContacto(contacto);
+        const data = await apiRequest({
+          accion: 'registrarCliente',
+          nombre,
+          telefono,
+          correo,
+          contacto
+        });
+
+        if (!data || data.ok === false || !data.cliente) {
+          throw new Error(data?.error || 'No se pudo crear la cuenta.');
+        }
+
+        state.cliente = data.cliente;
+        state.metaPuntos = safeNumber(data.metaPuntos, 10);
+        state.recompensa = safeText(data.recompensa, 'café gratis');
+        state.negocio = safeText(data.negocio, 'Café Urbano');
+        state.movimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
+
+        saveLocalCliente(state.cliente);
+        renderCliente();
+        showApp();
+        setActiveTab('tabHome');
+        clearFormInputs();
+      } catch (error) {
+        showRegister(error.message || 'Ocurrió un error al crear la cuenta.');
+      } finally {
+        btnCrearCuenta.disabled = false;
+        btnCrearCuenta.textContent = 'Crear cuenta';
+      }
+    }
+
+    async function ingresarCuenta() {
+      const identificador = safeText(loginIdCliente.value, '');
+      if (!identificador) {
+        showLoginFeedback('Escribe tu teléfono, correo o ID para ingresar.');
+        loginIdCliente.focus();
+        return;
+      }
+
+      btnIngresarCuenta.disabled = true;
+      btnIngresarCuenta.textContent = 'Ingresando...';
+
+      try {
+        await cargarClienteDesdeServidor(identificador);
+      } catch (error) {
+        showLoginFeedback(error.message || 'No se pudo recuperar la cuenta.');
+      } finally {
+        btnIngresarCuenta.disabled = false;
+        btnIngresarCuenta.textContent = 'Ingresar';
+      }
+    }
+
+    async function refreshData() {
+      if (!state.cliente?.id_cliente) return;
+      btnRefresh.disabled = true;
+      btnRefresh.textContent = 'Actualizando...';
+
+      try {
+        await cargarClienteDesdeServidor(state.cliente.id_cliente);
+      } catch (error) {
+        alert(error.message || 'No se pudo actualizar la información.');
+      } finally {
+        btnRefresh.disabled = false;
+        btnRefresh.textContent = 'Actualizar';
+      }
+    }
+
+    function logoutLocal() {
+      state.cliente = null;
+      state.movimientos = [];
+      clearLocalCliente();
+      clearFormInputs();
+      showRegister();
+    }
+
+    async function bootstrap() {
+      const local = getLocalCliente();
+
+      if (!local || !local.id_cliente) {
+        showRegister();
+        return;
+      }
+
+      try {
+        await cargarClienteDesdeServidor(local.id_cliente);
+      } catch {
+        clearLocalCliente();
+        showRegister('Tu sesión local venció o cambió. Ingresa nuevamente.');
+      }
+    }
+
+    btnCrearCuenta.addEventListener('click', crearCuenta);
+    btnYaTengoCuenta.addEventListener('click', openLoginModal);
+    btnIngresarCuenta.addEventListener('click', ingresarCuenta);
+    btnCerrarModal.addEventListener('click', closeLoginModal);
+    btnCancelarModal.addEventListener('click', closeLoginModal);
+    btnSalir.addEventListener('click', logoutLocal);
+    btnRefresh.addEventListener('click', refreshData);
+    btnBorrarCuenta.addEventListener('click', logoutLocal);
+
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) closeLoginModal();
+    });
+
+    document.querySelectorAll('.nav-btn').forEach((btn) => {
+      btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
+    });
+
+    [nombreInput, contactoInput].forEach((input) => {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') crearCuenta();
+      });
+    });
+
+    loginIdCliente.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') ingresarCuenta();
+    });
+
+    bootstrap();
+  </script>
+</body>
+</html>
