@@ -1122,16 +1122,26 @@
     }
 
     async function cargarClienteDesdeServidor(identificador) {
-      const data = await apiRequest({ accion: 'obtenerCliente', id_cliente: identificador });
+      const data = await apiRequest({ action: 'getClientAny', input: identificador });
       if (!data || data.ok === false || !data.cliente) {
-        throw new Error(data?.error || 'No encontramos esa cuenta.');
+        throw new Error(data?.message || 'No encontramos esa cuenta.');
       }
 
       state.cliente = data.cliente;
-      state.metaPuntos = safeNumber(data.metaPuntos, 10);
-      state.recompensa = safeText(data.recompensa, 'café gratis');
-      state.negocio = safeText(data.negocio, 'Café Urbano');
       state.movimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
+
+      try {
+        const dashboard = await apiRequest({ action: 'getDashboard' });
+        if (dashboard?.config) {
+          state.metaPuntos = safeNumber(dashboard.config.meta_puntos, 10);
+          state.recompensa = safeText(dashboard.config.recompensa, 'café gratis');
+          state.negocio = safeText(dashboard.config.nombre_negocio, 'Café Urbano');
+        }
+      } catch {
+        state.metaPuntos = 10;
+        state.recompensa = 'café gratis';
+        state.negocio = 'Café Urbano';
+      }
 
       saveLocalCliente(state.cliente);
       renderCliente();
@@ -1161,22 +1171,31 @@
       try {
         const { telefono, correo } = parseContacto(contacto);
         const data = await apiRequest({
-          accion: 'registrarCliente',
+          action: 'registerClient',
           nombre,
           telefono,
-          correo,
-          contacto
+          correo
         });
 
         if (!data || data.ok === false || !data.cliente) {
-          throw new Error(data?.error || 'No se pudo crear la cuenta.');
+          throw new Error(data?.message || 'No se pudo crear la cuenta.');
         }
 
         state.cliente = data.cliente;
-        state.metaPuntos = safeNumber(data.metaPuntos, 10);
-        state.recompensa = safeText(data.recompensa, 'café gratis');
-        state.negocio = safeText(data.negocio, 'Café Urbano');
-        state.movimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
+        state.movimientos = [];
+
+        try {
+          const dashboard = await apiRequest({ action: 'getDashboard' });
+          if (dashboard?.config) {
+            state.metaPuntos = safeNumber(dashboard.config.meta_puntos, 10);
+            state.recompensa = safeText(dashboard.config.recompensa, 'café gratis');
+            state.negocio = safeText(dashboard.config.nombre_negocio, 'Café Urbano');
+          }
+        } catch {
+          state.metaPuntos = 10;
+          state.recompensa = 'café gratis';
+          state.negocio = 'Café Urbano';
+        }
 
         saveLocalCliente(state.cliente);
         renderCliente();
