@@ -1072,9 +1072,7 @@
       ui.metaId.textContent = `ID: ${safeText(c.id_cliente)}`;
       ui.metaEstado.textContent = `Estado: ${safeText(c.estado, 'ACTIVO')}`;
 
-      ui.heroText.textContent = premioDisponible
-        ? 'Tu tarjeta está activa.'
-        : `Acumula ${meta} puntos y gana un ${state.recompensa}.`;
+      ui.heroText.textContent = 'Tu tarjeta está activa.';
 
       ui.faltanText.textContent = premioDisponible
         ? 'Ya puedes reclamar tu recompensa en caja.'
