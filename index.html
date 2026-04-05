@@ -2,12 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Tarjeta de Lealtad</title>
-
   <style>
     :root {
       --bg: #f6f2ec;
@@ -36,8 +32,7 @@
       -webkit-text-size-adjust: 100%;
     }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       min-height: 100vh;
@@ -106,19 +101,6 @@
       background: rgba(255,255,255,0.66);
       border: 1px solid var(--line);
       box-shadow: 0 8px 16px rgba(42,33,28,0.05);
-      overflow: hidden;
-    }
-
-    .brand-logo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .brand-name {
-      font-weight: 700;
-      letter-spacing: -0.03em;
     }
 
     .icon-btn {
@@ -475,6 +457,40 @@
       border: 1px solid rgba(101, 143, 93, 0.14);
     }
 
+    .bottom-nav {
+      position: sticky;
+      bottom: 0;
+      margin-top: 12px;
+      background: rgba(255,255,255,0.76);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.85);
+      box-shadow: 0 18px 36px rgba(42,33,28,0.08);
+      border-radius: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 8px;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      border: none;
+      background: transparent;
+      border-radius: 14px;
+      padding: 8px 6px;
+      cursor: pointer;
+      display: grid;
+      gap: 3px;
+      justify-items: center;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .nav-btn.active {
+      background: rgba(111,78,55,0.08);
+      color: var(--text);
+    }
+
     .small-meta {
       display: flex;
       gap: 8px;
@@ -568,59 +584,6 @@
       flex-shrink: 0;
     }
 
-    /* MENU INFERIOR NUEVO */
-    .bottom-nav {
-      position: sticky;
-      bottom: 0;
-      margin-top: 10px;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255,255,255,0.92);
-      box-shadow: 0 10px 28px rgba(42,33,28,0.07);
-      border-radius: 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      padding: 6px;
-      gap: 6px;
-    }
-
-    .nav-btn {
-      border: none;
-      background: transparent;
-      border-radius: 14px;
-      padding: 7px 4px 6px;
-      cursor: pointer;
-      display: grid;
-      gap: 3px;
-      justify-items: center;
-      color: #8a7d75;
-      font-weight: 700;
-      font-size: 10px;
-      line-height: 1.1;
-      transition: transform 0.16s ease, background 0.16s ease, color 0.16s ease;
-    }
-
-    .nav-btn svg {
-      width: 21px;
-      height: 21px;
-      display: block;
-    }
-
-    .nav-btn span {
-      font-size: 10px;
-      letter-spacing: -0.01em;
-    }
-
-    .nav-btn.active {
-      background: rgba(111,78,55,0.08);
-      color: #2a211c;
-    }
-
-    .nav-btn:active {
-      transform: scale(0.96);
-    }
-
     @media (max-width: 380px) {
       .hero h1,
       .register-title {
@@ -663,18 +626,13 @@
       <section id="registerView" class="register hidden">
         <div class="register-hero">
           <div class="brand">
-            <div class="brand-badge">
-              <img class="brand-logo" src="assets/logo.svg" alt="Logo de la app" />
-            </div>
-            <div class="brand-name">Café Urbano</div>
+            <div class="brand-badge">☕</div>
+            <div>Café Urbano</div>
           </div>
-
           <div class="mt-18"></div>
           <p class="eyebrow">Tarjeta digital</p>
           <h1 class="register-title">Tu café también puede premiarte.</h1>
-          <p class="register-sub">
-            Regístrate una sola vez, guarda tu tarjeta en este celular y acumula visitas para ganar tu café gratis.
-          </p>
+          <p class="register-sub">Regístrate una sola vez, guarda tu tarjeta en este celular y acumula visitas para ganar tu café gratis.</p>
         </div>
 
         <div class="register-card">
@@ -685,13 +643,7 @@
 
           <div class="field">
             <label for="contacto">Teléfono o correo</label>
-            <input
-              id="contacto"
-              type="text"
-              placeholder="Tu teléfono o correo"
-              autocomplete="email tel"
-              inputmode="email"
-            />
+            <input id="contacto" type="text" placeholder="Tu teléfono o correo" autocomplete="email tel" inputmode="email" />
           </div>
 
           <div class="register-actions">
@@ -702,9 +654,7 @@
 
           <div id="registerFeedback" class="feedback error hidden"></div>
 
-          <p class="register-note">
-            Tu cuenta quedará guardada en este dispositivo para que la próxima vez abras la app y veas directo tu tarjeta.
-          </p>
+          <p class="register-note">Tu cuenta quedará guardada en este dispositivo para que la próxima vez abras la app y veas directo tu tarjeta.</p>
         </div>
       </section>
 
@@ -721,12 +671,7 @@
 
           <div class="field">
             <label for="loginIdCliente">Teléfono, correo o ID</label>
-            <input
-              id="loginIdCliente"
-              type="text"
-              placeholder="Tu teléfono, correo o ID"
-              autocomplete="username"
-            />
+            <input id="loginIdCliente" type="text" placeholder="Tu teléfono, correo o ID" autocomplete="username" />
           </div>
 
           <div id="loginFeedback" class="feedback error hidden"></div>
@@ -736,19 +681,15 @@
             <button class="secondary-btn" id="btnCancelarModal" type="button">Cancelar</button>
           </div>
 
-          <p class="center-note" style="margin-top:0;">
-            Puedes ingresar con el dato que recuerdes: teléfono, correo o ID del cliente.
-          </p>
+          <p class="center-note" style="margin-top:0;">Puedes ingresar con el dato que recuerdes: teléfono, correo o ID del cliente.</p>
         </div>
       </div>
 
       <section id="appView" class="screen hidden">
         <div class="topbar">
           <div class="brand">
-            <div class="brand-badge">
-              <img class="brand-logo" src="assets/logo.svg" alt="Logo de la app" />
-            </div>
-            <div class="brand-name">Café Urbano</div>
+            <div class="brand-badge">☕</div>
+            <div>Café Urbano</div>
           </div>
           <button class="icon-btn" id="btnSalir" title="Cerrar sesión local" type="button">↺</button>
         </div>
@@ -772,9 +713,7 @@
               </div>
               <div class="big-points"><strong id="pointsCount">0</strong> / <span id="goalCount">10</span></div>
             </div>
-
             <div class="cups" id="cupsGrid"></div>
-
             <div class="promo">
               <div>
                 <strong id="promoTitle">Promoción base</strong>
@@ -789,12 +728,8 @@
             <div class="qr-box">
               <img id="qrImage" alt="QR del cliente" />
             </div>
-            <strong style="display:block; font-size:18px; letter-spacing:-0.03em;">
-              Muéstralo al finalizar tu compra
-            </strong>
-            <p class="muted">
-              El encargado lo escanea, valida el punto y tu progreso se actualiza en la tarjeta.
-            </p>
+            <strong style="display:block; font-size:18px; letter-spacing:-0.03em;">Muéstralo al finalizar tu compra</strong>
+            <p class="muted">El encargado lo escanea, valida el punto y tu progreso se actualiza en la tarjeta.</p>
           </div>
         </div>
 
@@ -858,44 +793,38 @@
             </div>
           </div>
 
-          <button class="secondary-btn" id="btnBorrarCuenta" type="button">
-            Borrar cuenta de este dispositivo
-          </button>
-          <p class="center-note">
-            Esto solo elimina la sesión local del teléfono. No borra el cliente en la base de datos.
-          </p>
+          <button class="secondary-btn" id="btnBorrarCuenta" type="button">Borrar cuenta de este dispositivo</button>
+          <p class="center-note">Esto solo elimina la sesión local del teléfono. No borra el cliente en la base de datos.</p>
         </div>
 
         <nav class="bottom-nav">
-          <button class="nav-btn active" data-tab="tabHome" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 10.5 12 3l9 7.5"></path>
-              <path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"></path>
-            </svg>
-            <span>Inicio</span>
-          </button>
+  <button class="nav-btn active" data-tab="tabHome" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 10.5 12 3l9 7.5"></path>
+      <path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"></path>
+    </svg>
+    <span>Inicio</span>
+  </button>
 
-          <button class="nav-btn" data-tab="tabMovimientos" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3.5" y="4.5" width="17" height="16" rx="3"></rect>
-              <path d="M3.5 10h17"></path>
-              <path d="M8 14h3"></path>
-              <path d="M8 17.5h6"></path>
-            </svg>
-            <span>Movs</span>
-          </button>
+  <button class="nav-btn" data-tab="tabMovimientos" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="3"></rect>
+      <path d="M3 10h18"></path>
+      <path d="M8 14h3"></path>
+      <path d="M13 14h3"></path>
+      <path d="M8 18h3"></path>
+    </svg>
+    <span>Movs</span>
+  </button>
 
-          <button class="nav-btn" data-tab="tabPerfil" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="8" r="4"></circle>
-              <path d="M4.5 20a7.5 7.5 0 0 1 15 0"></path>
-            </svg>
-            <span>Perfil</span>
-          </button>
-        </nav>
-      </section>
-    </div>
-  </div>
+  <button class="nav-btn" data-tab="tabPerfil" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21a8 8 0 1 0-16 0"></path>
+      <circle cx="12" cy="8" r="4"></circle>
+    </svg>
+    <span>Perfil</span>
+  </button>
+</nav>
 
   <script>
     const API_URL = 'https://script.google.com/macros/s/AKfycbwJjVizJZJ8tDyA7ESkdfIhaagZ1pEMTnvJpPny6HuhLDRoKwTJu06-L2ZpJVMVO4lR/exec';
@@ -1076,4 +1005,263 @@
       document.getElementById('metaEstado').textContent = `Estado: ${safeText(c.estado, 'ACTIVO')}`;
 
       const premioDisponible = String(c.premio_disponible || 'NO').toUpperCase() === 'SI';
-      const faltan = Math.max(0, state.metaPuntos -
+      const faltan = Math.max(0, state.metaPuntos - Number(c.puntos || 0));
+
+      document.getElementById('heroText').textContent = premioDisponible
+        ? `¡Ya tienes tu ${state.recompensa.toLowerCase()} disponible!`
+        : `Acumula ${state.metaPuntos} puntos y gana un ${state.recompensa.toLowerCase()}.`;
+
+      document.getElementById('faltanText').textContent = premioDisponible
+        ? 'Ya puedes pedir tu recompensa en caja.'
+        : `Te faltan ${faltan} ${faltan === 1 ? 'punto' : 'puntos'} para tu premio.`;
+
+      document.getElementById('promoTitle').textContent = premioDisponible ? 'Premio disponible' : 'Promoción base';
+      document.getElementById('promoSubtitle').textContent = premioDisponible
+        ? `Muéstrale tu tarjeta al encargado para canjear tu ${state.recompensa.toLowerCase()}.`
+        : `Acumula ${state.metaPuntos} puntos y gana un ${state.recompensa.toLowerCase()}.`;
+
+      document.getElementById('perfilPremio').textContent = premioDisponible
+        ? `${state.recompensa} disponible`
+        : 'Sin premio disponible';
+
+      document.getElementById('qrImage').src = buildQrData(c.qr_id || c.id_cliente);
+      renderCups(Number(c.puntos || 0), Number(state.metaPuntos || 10));
+      renderMovimientos();
+    }
+
+    async function apiGet(params) {
+      const url = `${API_URL}?${new URLSearchParams(params).toString()}`;
+      const res = await fetch(url);
+      return res.json();
+    }
+
+    async function loadClientFromServer(id) {
+      const data = await apiGet({ action: 'getClient', id });
+      if (!data.ok) throw new Error(data.message || 'No se pudo cargar el cliente');
+      state.cliente = data.cliente;
+      saveLocalCliente(data.cliente);
+    }
+
+    async function loadDashboardMeta() {
+      try {
+        const data = await apiGet({ action: 'getDashboard' });
+        if (data.ok && data.dashboard) {
+          state.movimientos = (data.dashboard.ultimos_movimientos || []).filter(
+            (m) => String(m.id_cliente || '') === String(state.cliente?.id_cliente || '')
+          );
+        }
+      } catch (err) {
+        console.warn('No se pudieron cargar movimientos.', err);
+      }
+    }
+
+    async function hydrateClientApp() {
+      const local = getLocalCliente();
+      if (!local || !local.id_cliente) {
+        showRegister();
+        return;
+      }
+
+      if (API_URL.includes('PEGAR_AQUI')) {
+        const demoCliente = {
+          id_cliente: 'CLT001',
+          nombre: 'Cliente demo',
+          telefono: '',
+          correo: '',
+          puntos: 4,
+          premio_disponible: 'NO',
+          qr_id: 'CLT001',
+          estado: 'ACTIVO'
+        };
+        state.cliente = demoCliente;
+        state.movimientos = [
+          { fecha: new Date().toISOString(), tipo: 'SUMA', id_cliente: 'CLT001' }
+        ];
+        saveLocalCliente(demoCliente);
+        renderCliente();
+        showApp();
+        return;
+      }
+
+      try {
+        await loadClientFromServer(local.id_cliente);
+        await loadDashboardMeta();
+        renderCliente();
+        showApp();
+      } catch (error) {
+        console.error(error);
+        showRegister('No se pudo recuperar la cuenta guardada. Regístrala de nuevo o revisa la API.', 'error');
+      }
+    }
+
+    async function loginExistingClient() {
+      const input = loginIdCliente.value.trim();
+
+      if (!input) {
+        showLoginFeedback('Ingresa tu teléfono, correo o ID para continuar.', 'error');
+        return;
+      }
+
+      if (API_URL.includes('PEGAR_AQUI')) {
+        const demoCliente = {
+          id_cliente: 'CLT001',
+          nombre: 'Cliente demo',
+          telefono: input.includes('@') ? '' : input,
+          correo: input.includes('@') ? input : '',
+          puntos: 4,
+          premio_disponible: 'NO',
+          qr_id: 'CLT001',
+          estado: 'ACTIVO'
+        };
+        state.cliente = demoCliente;
+        state.movimientos = [
+          { fecha: new Date().toISOString(), tipo: 'SUMA', id_cliente: 'CLT001' }
+        ];
+        saveLocalCliente(demoCliente);
+        renderCliente();
+        showApp();
+        return;
+      }
+
+      try {
+        btnIngresarCuenta.disabled = true;
+        btnIngresarCuenta.textContent = 'Ingresando...';
+        const data = await apiGet({ action: 'getClientAny', input });
+        if (!data.ok) throw new Error(data.message || 'No se pudo encontrar la cuenta');
+        state.cliente = data.cliente;
+        saveLocalCliente(data.cliente);
+        await loadDashboardMeta();
+        renderCliente();
+        showApp();
+      } catch (error) {
+        showLoginFeedback(error.message || 'No se encontró ninguna cuenta con ese dato.', 'error');
+      } finally {
+        btnIngresarCuenta.disabled = false;
+        btnIngresarCuenta.textContent = 'Ingresar';
+      }
+    }
+
+    async function registerClient() {
+      const nombre = document.getElementById('nombre').value.trim();
+      const contacto = contactoInput.value.trim();
+      const { telefono, correo } = parseContacto(contacto);
+
+      if (!nombre) {
+        showRegister('Ingresa tu nombre para crear la cuenta.', 'error');
+        return;
+      }
+
+      if (!contacto) {
+        showRegister('Ingresa tu teléfono o correo para continuar.', 'error');
+        return;
+      }
+
+      if (API_URL.includes('PEGAR_AQUI')) {
+        const demoCliente = {
+          id_cliente: 'CLT001',
+          nombre,
+          telefono,
+          correo,
+          puntos: 3,
+          premio_disponible: 'NO',
+          qr_id: 'CLT001',
+          estado: 'ACTIVO'
+        };
+        state.cliente = demoCliente;
+        state.movimientos = [
+          { fecha: new Date().toISOString(), tipo: 'SUMA', id_cliente: 'CLT001' },
+          { fecha: new Date(Date.now() - 86400000).toISOString(), tipo: 'SUMA', id_cliente: 'CLT001' }
+        ];
+        saveLocalCliente(demoCliente);
+        renderCliente();
+        showApp();
+        return;
+      }
+
+      try {
+        btnCrearCuenta.disabled = true;
+        btnCrearCuenta.textContent = 'Creando...';
+        const data = await apiGet({ action: 'registerClient', nombre, telefono, correo });
+        if (!data.ok) throw new Error(data.message || 'No se pudo crear la cuenta');
+
+        state.cliente = data.cliente;
+        state.movimientos = [];
+        saveLocalCliente(data.cliente);
+        renderCliente();
+        showApp();
+      } catch (error) {
+        showRegister(error.message || 'Ocurrió un error al crear la cuenta.', 'error');
+      } finally {
+        btnCrearCuenta.disabled = false;
+        btnCrearCuenta.textContent = 'Crear cuenta';
+      }
+    }
+
+    function handleNav(tabId) {
+      document.querySelectorAll('.tab-panel').forEach((el) => el.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+      document.querySelectorAll('.nav-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.tab === tabId);
+      });
+    }
+
+    function runSelfTests() {
+      console.assert(parseContacto('55554444').telefono === '55554444', 'Debe detectar teléfono');
+      console.assert(parseContacto('hola@correo.com').correo === 'hola@correo.com', 'Debe detectar correo');
+      console.assert(parseContacto('').telefono === '' && parseContacto('').correo === '', 'Vacío debe regresar vacío');
+      console.assert(safeText('', 'x') === 'x', 'safeText debe usar fallback');
+    }
+
+    document.querySelectorAll('.nav-btn').forEach((btn) => {
+      btn.addEventListener('click', () => handleNav(btn.dataset.tab));
+    });
+
+    btnCrearCuenta.addEventListener('click', registerClient);
+    btnYaTengoCuenta.addEventListener('click', openLoginModal);
+    btnIngresarCuenta.addEventListener('click', loginExistingClient);
+    btnCerrarModal.addEventListener('click', closeLoginModal);
+    btnCancelarModal.addEventListener('click', closeLoginModal);
+
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) closeLoginModal();
+    });
+
+    loginIdCliente.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') loginExistingClient();
+    });
+
+    contactoInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') registerClient();
+    });
+
+    btnSalir.addEventListener('click', () => {
+      clearLocalCliente();
+      state.cliente = null;
+      state.movimientos = [];
+      showRegister();
+      handleNav('tabHome');
+    });
+
+    btnBorrarCuenta.addEventListener('click', () => {
+      clearLocalCliente();
+      state.cliente = null;
+      state.movimientos = [];
+      showRegister('Cuenta eliminada de este dispositivo.', 'ok');
+    });
+
+    btnRefresh.addEventListener('click', async () => {
+      if (!state.cliente?.id_cliente || API_URL.includes('PEGAR_AQUI')) return;
+      try {
+        await loadClientFromServer(state.cliente.id_cliente);
+        await loadDashboardMeta();
+        renderCliente();
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    runSelfTests();
+    hydrateClientApp();
+  </script>
+</body>
+</html>
