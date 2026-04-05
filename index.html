@@ -976,9 +976,11 @@
       }
     }
 
-    function clearLocalCliente() {
-      localStorage.removeItem(STORAGE_KEY);
-    }
+    function clearFormInputs() {
+  if (nombreInput) nombreInput.value = '';
+  if (contactoInput) contactoInput.value = '';
+  if (loginIdCliente) loginIdCliente.value = '';
+}
 
     function safeText(value, fallback = '—') {
       return value && String(value).trim() ? String(value).trim() : fallback;
