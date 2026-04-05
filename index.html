@@ -202,17 +202,17 @@
     .cups {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
+      gap: 6px;
     }
 
     .cup {
       aspect-ratio: 1;
-      border-radius: 18px;
+      border-radius: 14px;
       background: rgba(255,255,255,0.88);
       border: 1px solid rgba(17,18,21,0.06);
       display: grid;
       place-items: center;
-      font-size: 17px;
+      font-size: 14px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
       transition: 0.2s ease;
     }
@@ -748,14 +748,7 @@
             
           </div>
 
-          <div class="card progress-wrap">
-            <div class="progress-head">
-              <div>
-                <h2>Tu progreso</h2>
-                <p class="muted" id="faltanText">Te faltan 10 puntos para tu premio.</p>
-              </div>
-              <div class="big-points"><strong id="pointsCount">0</strong> / <span id="goalCount">10</span></div>
-            </div>
+          
             <div class="cups" id="cupsGrid"></div>
             <div class="promo">
               <div>
