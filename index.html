@@ -596,7 +596,7 @@
           <div class="clients-search">
             <div class="search-wrap">
               <span class="search-icon">🔎</span>
-              <input class="input" id="clientSearchInput" type="search" placeholder="Buscar por nombre, código o día" autocomplete="off" />
+              <input class="input" id="clientSearchInput" type="search" placeholder="Buscar por nombre, código, día o ruta" autocomplete="off" />
             </div>
             <div class="search-info" id="clientSearchInfo">Todos los clientes</div>
           </div>
@@ -1005,7 +1005,7 @@
           <p class="client-class">Clasificación: ${escapeHtml(client.clasificacion)} · Promotora: ${escapeHtml(client.promotora)}</p>
           <div class="client-actions">
             <button class="btn btn-secondary" onclick="openEditClient('${client.id}')">✏️ Editar</button>
-            <button class="btn btn-danger" onclick="deleteClient('${client.id}')">🗑 Borrar</button>
+            <button class="btn btn-danger" onclick="confirmAndDeleteClient('${client.id}')">🗑 Borrar</button>
           </div>
         </div>
       `).join("");
@@ -1085,6 +1085,16 @@
       openModal("editModal");
     }
     window.openEditClient = openEditClient;
+
+    async function confirmAndDeleteClient(id) {
+      if (!id) return;
+      const confirmed = window.confirm("¿Estás seguro que deseas borrar?
+
+Confirmar o cancelar.");
+      if (!confirmed) return;
+      await confirmAndDeleteClient(id);
+    }
+    window.confirmAndDeleteClient = confirmAndDeleteClient;
 
     async function deleteClient(id) {
       try {
@@ -1413,7 +1423,7 @@
     document.getElementById("deleteClientBtn").addEventListener("click", async () => {
       const id = document.getElementById("edit_id").value;
       if (!id) return;
-      await deleteClient(id);
+      await confirmAndDeleteClient(id);
     });
 
     document.getElementById("exportExcelBtn").addEventListener("click", () => {
