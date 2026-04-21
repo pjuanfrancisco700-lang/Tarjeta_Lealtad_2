@@ -2,1298 +2,1428 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Tarjeta de Lealtad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#f8fafc" />
+  <meta name="color-scheme" content="light" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Gestor Base" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+  <title>Gestor de base móvil</title>
+  <script src="https://script.google.com/macros/s/AKfycbwptPC80lyu_i6nM3eDqavkLrnVRQNGCKWmfecyqL-5mJAuE4DkR_dETXRIQT-Uc7o/exec"></script>
   <style>
     :root {
-      --bg: #f3f4f6;
-      --bg-soft: #fafafa;
-      --card: rgba(255, 255, 255, 0.78);
-      --card-strong: rgba(255,255,255,0.94);
-      --text: #111215;
-      --muted: #6b7280;
-      --line: rgba(17, 18, 21, 0.08);
-      --line-strong: rgba(17, 18, 21, 0.12);
-      --accent: #111215;
-      --accent-soft: rgba(17, 18, 21, 0.06);
-      --success: #2f855a;
-      --danger: #c53030;
-      --shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
-      --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.05);
-      --radius-xl: 30px;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --muted: #64748b;
+      --text: #0f172a;
+      --line: #e2e8f0;
+      --soft: #f1f5f9;
+      --blue-soft: #eff6ff;
+      --green-soft: #ecfdf5;
+      --violet-soft: #f5f3ff;
+      --shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+      --shadow-strong: 0 18px 48px rgba(15, 23, 42, 0.18);
+      --radius-xl: 28px;
       --radius-lg: 22px;
-      --maxw: 430px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
     }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    * { box-sizing: border-box; }
     html {
-      width: 100%;
-      overflow-x: hidden;
-      touch-action: manipulation;
+      color-scheme: light;
       -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
+      overscroll-behavior: none;
+      scroll-behavior: smooth;
     }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      min-height: 100dvh;
-      overflow-x: hidden;
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0) 26%),
-        linear-gradient(180deg, #f8f8f8 0%, #eef1f4 100%);
-      color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
     body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+    }
+    input, select, textarea, button {
+      font: inherit;
+      font-size: 16px;
+    }
+    button { cursor: pointer; }
+
+    .app {
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 24px 16px 110px;
+    }
+
+    .header {
       display: flex;
-      justify-content: center;
-      padding: max(12px, env(safe-area-inset-top)) 12px max(18px, env(safe-area-inset-bottom));
-    }
-
-    .app-shell {
-      width: 100%;
-      max-width: var(--maxw);
-      min-height: 100%;
-    }
-
-    .phone {
-      width: 100%;
-      min-height: calc(100dvh - max(12px, env(safe-area-inset-top)) - max(18px, env(safe-area-inset-bottom)) - 24px);
-      border-radius: 38px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.58) 100%);
-      border: 1px solid rgba(255,255,255,0.75);
-      box-shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
-      backdrop-filter: blur(24px) saturate(160%);
-      -webkit-backdrop-filter: blur(24px) saturate(160%);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .status-space {
-      height: 14px;
-    }
-
-    .screen {
-      padding: 14px;
-      padding-bottom: calc(18px + env(safe-area-inset-bottom));
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 18px;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
       font-weight: 700;
+      color: #94a3b8;
+    }
+    .title {
+      margin: 8px 0 4px;
+      font-size: 30px;
+      line-height: 1.05;
       letter-spacing: -0.03em;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
     }
 
-    .brand-badge,
     .icon-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
       display: grid;
       place-items: center;
-      background: rgba(255,255,255,0.7);
-      border: 1px solid rgba(17,18,21,0.06);
-      box-shadow: var(--shadow-soft);
-      color: var(--text);
+      color: #334155;
+      flex: 0 0 auto;
     }
 
-    .brand-badge {
+    .toast {
+      display: none;
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      color: #334155;
       font-size: 14px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
     }
+    .toast.show { display: block; }
 
-    .icon-btn {
-      cursor: pointer;
-      font-size: 15px;
-    }
+    .screen { display: none; }
+    .screen.active { display: block; }
 
     .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.68));
-      border: 1px solid rgba(255,255,255,0.88);
-      box-shadow: var(--shadow);
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
       padding: 16px;
-      backdrop-filter: blur(18px) saturate(150%);
-      -webkit-backdrop-filter: blur(18px) saturate(150%);
     }
+    .card + .card { margin-top: 14px; }
 
-    .hero {
-      background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(244,246,248,0.82) 100%);
-    }
-
-    .eyebrow {
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin: 0 0 10px;
-    }
-
-    .hero h1,
-    .register-title {
-      margin: 0;
-      font-size: 31px;
-      line-height: 0.98;
-      letter-spacing: -0.07em;
-      font-weight: 800;
-    }
-
-    .hero p,
-    .register-sub {
-      color: var(--muted);
-      margin: 10px 0 0;
-      line-height: 1.5;
-      font-size: 13px;
-    }
-
-    .stack {
-      display: grid;
-      gap: 10px;
-    }
-
-    .mt-18 { margin-top: 18px; }
-    .mt-20 { margin-top: 20px; }
-
-    .progress-wrap {
-      display: grid;
-      gap: 12px;
-    }
-
-    .progress-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .progress-head h2 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: -0.04em;
-    }
-
-    .big-points {
-      font-size: 16px;
-      color: var(--muted);
-    }
-
-    .big-points strong {
-      color: var(--text);
-      font-size: 22px;
-      letter-spacing: -0.05em;
-    }
-
-    .cups {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
-    }
-
-    .cup {
-      aspect-ratio: 1;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.88);
-      border: 1px solid rgba(17,18,21,0.06);
-      display: grid;
-      place-items: center;
-      font-size: 14px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
-      transition: 0.2s ease;
-    }
-
-    .cup.filled {
-      background: linear-gradient(180deg, #1f2937 0%, #111215 100%);
-      color: #ffffff;
-      border-color: rgba(17, 18, 21, 0.28);
-      transform: translateY(-1px);
-    }
-
-    .promo {
+    .section-head {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 14px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(17,18,21,0.04), rgba(17,18,21,0.02));
-      border: 1px solid rgba(17,18,21,0.06);
+      gap: 12px;
+      margin-bottom: 16px;
     }
-
-    .promo strong {
-      display: block;
-      font-size: 14px;
-      letter-spacing: -0.02em;
-    }
-
-    .promo span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .qr-card {
-      text-align: center;
-      padding-top: 16px;
-      padding-bottom: 16px;
-    }
-
-    .qr-box {
-      width: min(100%, 190px);
-      aspect-ratio: 1;
-      margin: 0 auto 12px;
-      background: var(--card-strong);
-      border-radius: 28px;
-      padding: 16px;
-      border: 1px solid rgba(17,18,21,0.06);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    .section-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 18px;
       display: grid;
       place-items: center;
-    }
-
-    .qr-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 14px;
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .section-title h3 {
-      margin: 0;
       font-size: 19px;
-      letter-spacing: -0.04em;
+      color: #334155;
     }
-
-    .mini-link {
-      background: transparent;
-      border: none;
-      color: var(--accent);
-      font-weight: 700;
-      cursor: pointer;
-      padding: 0;
-      font-size: 13px;
-    }
-
-    .row-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .row-card:first-of-type {
-      border-top: none;
-      padding-top: 0;
-    }
-
-    .row-card:last-of-type {
-      padding-bottom: 0;
-    }
-
-    .row-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .row-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: rgba(17,18,21,0.04);
-      border: 1px solid rgba(17,18,21,0.05);
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-    }
-
-    .row-icon svg {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      color: var(--text);
-    }
-
-    .row-card strong,
-    .row-card p {
+    .blue { background: var(--blue-soft); }
+    .green { background: var(--green-soft); }
+    .violet { background: var(--violet-soft); }
+    .section-title {
       margin: 0;
+      font-size: 16px;
+      font-weight: 700;
     }
-
-    .row-card p {
+    .section-subtitle {
+      margin: 3px 0 0;
+      font-size: 12px;
       color: var(--muted);
-      font-size: 13px;
-      margin-top: 3px;
     }
 
-    .pill {
+    form { margin: 0; }
+    .field { margin-bottom: 14px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .input, .select, .textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      border-radius: 18px;
+      color: var(--text);
+      outline: none;
+      transition: .2s ease;
+    }
+    .input, .select {
+      height: 48px;
+      padding: 0 14px;
+    }
+    .textarea {
+      min-height: 96px;
+      resize: vertical;
+      padding: 14px;
+    }
+    .input:focus, .select:focus, .textarea:focus {
+      border-color: #cbd5e1;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(226,232,240,.85);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .info-box {
+      background: var(--soft);
+      border-radius: 18px;
+      padding: 12px 14px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .btn {
+      height: 48px;
+      border: none;
+      border-radius: 18px;
+      padding: 0 16px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 9px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      background: rgba(17,18,21,0.06);
-      color: var(--text);
-      white-space: nowrap;
-    }
-
-    .primary-btn,
-    .secondary-btn {
-      width: 100%;
-      border: none;
-      border-radius: 20px;
-      padding: 15px 16px;
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .primary-btn {
-      background: linear-gradient(180deg, #1f2937, #111215);
-      color: #ffffff;
-      box-shadow: 0 18px 30px rgba(17,18,21,0.18);
-    }
-
-    .secondary-btn {
-      background: rgba(255,255,255,0.8);
-      color: var(--text);
-      border: 1px solid rgba(17,18,21,0.06);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .primary-btn:active,
-    .secondary-btn:active,
-    .icon-btn:active {
-      transform: scale(0.985);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .register {
-      min-height: calc(100dvh - max(12px, env(safe-area-inset-top)) - max(18px, env(safe-area-inset-bottom)) - 24px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 12px;
-      padding: 16px 14px 18px;
-    }
-
-    .register-hero {
-      text-align: left;
-      padding: 6px 4px 0;
-    }
-
-    .register-card {
-      background: rgba(255,255,255,0.82);
-      border: 1px solid rgba(255,255,255,0.9);
-      box-shadow: var(--shadow);
-      border-radius: 32px;
-      padding: 16px;
-      display: grid;
-      gap: 12px;
-      backdrop-filter: blur(18px) saturate(150%);
-      -webkit-backdrop-filter: blur(18px) saturate(150%);
-    }
-
-    .field {
-      display: grid;
       gap: 8px;
+      font-weight: 600;
+      transition: transform .12s ease, opacity .2s ease, background .2s ease;
     }
-
-    .field label {
-      font-size: 13px;
-      font-weight: 700;
-      color: #5d4d42;
-    }
-
-    .field input {
+    .btn:active { transform: scale(.99); }
+    .btn-primary {
       width: 100%;
-      border: 1px solid rgba(17,18,21,0.06);
-      background: rgba(248,250,252,0.92);
-      border-radius: 18px;
-      padding: 14px 15px;
+      background: #0f172a;
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+    .btn-secondary {
+      background: #fff;
+      color: #334155;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      width: 100%;
+    }
+    .btn-danger {
+      background: #fff;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+      box-shadow: var(--shadow);
+      width: 100%;
+    }
+
+    .clients-search {
+      margin-bottom: 14px;
+    }
+    .search-wrap {
+      position: relative;
+    }
+    .search-wrap .input {
+      padding-left: 42px;
+      padding-right: 14px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
       font-size: 15px;
-      outline: none;
-      color: var(--text);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+      color: #94a3b8;
+      pointer-events: none;
     }
-
-    .field input:focus {
-      border-color: rgba(17,18,21,0.14);
-      box-shadow: 0 0 0 4px rgba(17,18,21,0.05);
-    }
-
-    .register-note {
+    .search-info {
+      margin: 8px 4px 0;
       font-size: 12px;
       color: var(--muted);
-      line-height: 1.5;
-      margin-top: 2px;
     }
 
-    .feedback {
-      padding: 14px 15px;
-      border-radius: 16px;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .feedback.error {
-      background: rgba(184, 93, 93, 0.1);
-      color: var(--danger);
-      border: 1px solid rgba(184, 93, 93, 0.14);
-    }
-
-    .feedback.ok {
-      background: rgba(101, 143, 93, 0.1);
-      color: var(--success);
-      border: 1px solid rgba(101, 143, 93, 0.14);
-    }
-
-    .bottom-nav {
-      position: sticky;
-      bottom: 0;
-      margin-top: 14px;
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(18px) saturate(160%);
-      -webkit-backdrop-filter: blur(18px) saturate(160%);
-      border: 1px solid rgba(255,255,255,0.9);
-      box-shadow: 0 20px 40px rgba(15,23,42,0.1);
+    .client-list { display: grid; gap: 12px; }
+    .client-item {
+      background: var(--soft);
+      border: 1px solid var(--line);
       border-radius: 24px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      padding: 8px;
-      gap: 8px;
+      padding: 14px;
     }
-
-    .nav-btn {
-      border: none;
-      background: transparent;
-      border-radius: 18px;
-      padding: 10px 8px;
-      cursor: pointer;
-      display: grid;
-      gap: 5px;
-      justify-items: center;
-      color: #8b93a1;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: -0.01em;
-    }
-
-    .nav-btn svg {
-      width: 22px;
-      height: 22px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.9;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .nav-btn.active {
-      background: rgba(17,18,21,0.06);
-      color: var(--text);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
-    }
-
-    .small-meta {
+    .pill-row {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-top: 8px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+    }
+    .client-name {
+      margin: 12px 0 4px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .client-meta, .client-address, .client-class {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+    .client-address { margin-top: 7px; }
+    .client-class { margin-top: 8px; font-weight: 600; color: #475569; }
+    .client-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .client-actions .btn {
+      width: auto;
+      min-width: 0;
+      height: 34px;
+      padding: 0 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: none;
     }
 
-    .tiny-pill {
-      padding: 8px 11px;
-      border-radius: 999px;
+    .stats { display: grid; gap: 12px; }
+    .stat-box {
+      background: var(--soft);
+      border-radius: 24px;
+      padding: 14px;
+    }
+    .stat-label {
       font-size: 11px;
       color: var(--muted);
-      background: rgba(255,255,255,0.8);
-      border: 1px solid rgba(17,18,21,0.06);
-      box-shadow: var(--shadow-soft);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 700;
     }
-
-    .center-note {
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
+    .stat-number {
+      margin-top: 8px;
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+    .route-list {
       margin-top: 12px;
-      line-height: 1.5;
-    }
-
-    .register-actions,
-    .modal-actions {
       display: grid;
-      gap: 10px;
+      gap: 8px;
     }
+    .route-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      padding: 10px 12px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      font-size: 14px;
+    }
+    .route-item strong { font-size: 15px; }
 
-    .divider-text {
-      text-align: center;
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(14px);
+      z-index: 30;
+    }
+    .bottom-nav-inner {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .nav-btn {
+      border: none;
+      border-radius: 18px;
+      height: 46px;
       font-size: 12px;
-      color: var(--muted);
-      margin: 2px 0;
+      font-weight: 700;
+      color: #64748b;
+      background: #f1f5f9;
+      transition: .2s ease;
+    }
+    .nav-btn.active {
+      background: #0f172a;
+      color: #fff;
     }
 
-    .modal-overlay {
+    .modal {
       position: fixed;
       inset: 0;
-      background: rgba(42, 33, 28, 0.28);
-      backdrop-filter: blur(10px);
-      display: flex;
+      background: rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(6px);
+      display: none;
       align-items: flex-end;
       justify-content: center;
-      padding: 16px 12px max(16px, env(safe-area-inset-bottom));
-      z-index: 50;
+      padding: 12px;
+      z-index: 80;
     }
-
-    .modal-card {
+    .modal.show { display: flex; }
+    .modal-box {
       width: 100%;
-      max-width: var(--maxw);
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(255,255,255,0.84);
-      box-shadow: 0 24px 70px rgba(42,33,28,0.16);
-      border-radius: 30px;
+      max-width: 430px;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow-strong);
       padding: 18px;
-      display: grid;
-      gap: 14px;
+      max-height: min(85vh, 780px);
+      overflow: auto;
     }
-
     .modal-head {
       display: flex;
-      align-items: flex-start;
       justify-content: space-between;
+      align-items: flex-start;
       gap: 12px;
+      margin-bottom: 14px;
     }
-
-    .modal-head h3 {
+    .modal-title {
       margin: 0;
-      font-size: 24px;
-      letter-spacing: -0.05em;
+      font-size: 19px;
+      font-weight: 700;
     }
-
-    .modal-head p {
-      margin: 8px 0 0;
+    .modal-subtitle {
+      margin: 4px 0 0;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.45;
     }
-
-    .modal-close {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.8);
-      color: var(--text);
-      font-size: 18px;
-      cursor: pointer;
-      flex-shrink: 0;
+    .close-btn {
+      border: none;
+      background: var(--soft);
+      color: #475569;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
     }
 
-    @media (max-width: 380px) {
-      .hero h1,
-      .register-title {
-        font-size: 26px;
-      }
+    .settings-options { display: grid; gap: 10px; }
+    .option-card {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 24px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+    .option-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      color: #334155;
+      flex: 0 0 auto;
+    }
+    .option-body {
+      min-width: 0;
+      flex: 1;
+    }
+    .option-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0 0 2px;
+    }
+    .option-desc {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .arrow { color: #94a3b8; font-size: 18px; }
 
-      .cups {
-        gap: 7px;
-      }
+    .upload-box {
+      border: 1px dashed #cbd5e1;
+      background: var(--soft);
+      border-radius: 28px;
+      padding: 26px 16px;
+      text-align: center;
+    }
+    .upload-box .upload-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    .upload-box p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
 
-      .cup {
-        border-radius: 14px;
-        font-size: 17px;
-      }
-
-      .screen {
-        padding: 12px;
-        padding-bottom: calc(18px + env(safe-area-inset-bottom));
-      }
-
-      .register {
-        padding: 14px 12px calc(18px + env(safe-area-inset-bottom));
-      }
-
-      .phone {
-        border-radius: 26px;
-      }
-
-      .qr-box {
-        width: min(100%, 168px);
-      }
+    @media (min-width: 640px) {
+      .modal { align-items: center; }
     }
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <div class="phone">
-      <div class="status-space"></div>
+  <div class="app">
+    <header class="header">
+      <div>
+        <div class="eyebrow">Gestión</div>
+        <h1 class="title">Gestor de base móvil</h1>
+        <p class="subtitle">Gestión de datos conectada a Google Sheets.</p>
+      </div>
+      <button class="icon-btn" id="openSettingsBtn" aria-label="Abrir configuración">⚙️</button>
+    </header>
 
-      <section id="registerView" class="register hidden">
-        <div class="register-hero">
-          <div class="brand">
-            <div class="brand-badge">CU</div>
-            <div>Café Urbano</div>
-          </div>
-          <div class="mt-18"></div>
-          <p class="eyebrow">Tarjeta digital</p>
-          <h1 class="register-title">Tu café también puede premiarte.</h1>
-          <p class="register-sub">Regístrate una sola vez, guarda tu tarjeta en este celular y acumula visitas para ganar tu café gratis.</p>
-        </div>
+    <div class="toast" id="toast"></div>
 
-        <div class="register-card">
-          <div class="field">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" type="text" placeholder="Tu nombre" autocomplete="name" />
-          </div>
-
-          <div class="field">
-            <label for="contacto">Teléfono o correo</label>
-            <input id="contacto" type="text" placeholder="Tu teléfono o correo" autocomplete="email tel" inputmode="email" />
+    <main>
+      <section class="screen active" id="screen-registro">
+        <div class="card">
+          <div class="section-head">
+            <div class="section-icon blue">＋</div>
+            <div>
+              <h2 class="section-title">Agregar cliente</h2>
+              
+            </div>
           </div>
 
-          <div class="register-actions">
-            <button class="primary-btn" id="btnCrearCuenta" type="button">Crear cuenta</button>
-            <div class="divider-text">o</div>
-            <button class="secondary-btn" id="btnYaTengoCuenta" type="button">Ya tengo cuenta</button>
-          </div>
+          <form id="addClientForm">
+            <div class="field">
+              <label for="codigo"># Código</label>
+              <input class="input" id="codigo" name="codigo" placeholder="Ej. 1132706" inputmode="numeric" />
+            </div>
 
-          <div id="registerFeedback" class="feedback error hidden"></div>
+            <div class="grid-2">
+              <div class="field">
+                <label for="ruta">📍 Ruta</label>
+                <input class="input" id="ruta" name="ruta" placeholder="Ej. 17029" />
+              </div>
+              <div class="field">
+                <label for="dia_visita">📅 Día visita</label>
+                <select class="select" id="dia_visita" name="dia_visita">
+                  <option value="1-Lunes">1-Lunes</option>
+                  <option value="2-Martes">2-Martes</option>
+                  <option value="3-Miércoles">3-Miércoles</option>
+                  <option value="4-Jueves">4-Jueves</option>
+                  <option value="5-Viernes">5-Viernes</option>
+                  <option value="6-Sábado">6-Sábado</option>
+                  <option value="7-Domingo">7-Domingo</option>
+                </select>
+              </div>
+            </div>
 
-          <p class="register-note">Tu cuenta quedará guardada en este dispositivo para que la próxima vez abras la app y veas directo tu tarjeta.</p>
+            <div class="field">
+              <label for="nombre_negocio">🏪 Nombre Negocio</label>
+              <input class="input" id="nombre_negocio" name="nombre_negocio" placeholder="Ej. SUPER 24 SANARATE CENTRO" />
+            </div>
+
+            <div class="field">
+              <label for="direccion">🏢 Dirección</label>
+              <textarea class="textarea" id="direccion" name="direccion" placeholder="Dirección"></textarea>
+            </div>
+
+            <div class="field">
+              <label for="clasificacion">🏷 Clasificación PDV</label>
+              <input class="input" id="clasificacion" name="clasificacion" placeholder="Ej. A" />
+            </div>
+
+            <div class="info-box">
+              Usa valores por defecto.
+            </div>
+
+            <button type="submit" class="btn btn-primary">💾 AGREGAR</button>
+          </form>
         </div>
       </section>
 
-      <div id="loginModal" class="modal-overlay hidden">
-        <div class="modal-card">
-          <div class="modal-head">
+      <section class="screen" id="screen-clientes">
+        <div class="card">
+          <div class="section-head">
+            <div class="section-icon green">👥</div>
             <div>
-              <p class="eyebrow" style="margin-bottom:8px;">Ingresar</p>
-              <h3>Recupera tu tarjeta</h3>
-              <p>Ingresa tu teléfono, correo o ID para recuperar tu cuenta en este dispositivo.</p>
+              <h2 class="section-title">Clientes</h2>
+              
             </div>
-            <button class="modal-close" id="btnCerrarModal" type="button">✕</button>
           </div>
 
-          <div class="field">
-            <label for="loginIdCliente">Teléfono, correo o ID</label>
-            <input id="loginIdCliente" type="text" placeholder="Tu teléfono, correo o ID" autocomplete="username" />
+          <div class="clients-search">
+            <div class="search-wrap">
+              <span class="search-icon">🔎</span>
+              <input class="input" id="clientSearchInput" type="search" placeholder="Buscar por nombre, código o día" autocomplete="off" />
+            </div>
+            <div class="search-info" id="clientSearchInfo">Todos los clientes</div>
           </div>
 
-          <div id="loginFeedback" class="feedback error hidden"></div>
-
-          <div class="modal-actions">
-            <button class="primary-btn" id="btnIngresarCuenta" type="button">Ingresar</button>
-            <button class="secondary-btn" id="btnCancelarModal" type="button">Cancelar</button>
-          </div>
-
-          <p class="center-note" style="margin-top:0;">Puedes ingresar con el dato que recuerdes: teléfono, correo o ID del cliente.</p>
+          <div class="client-list" id="clientList"></div>
         </div>
+      </section>
+
+      <section class="screen" id="screen-vista">
+        <div class="card">
+          <div class="section-head">
+            <div class="section-icon violet">📊</div>
+            <div>
+              <h2 class="section-title">Resumen</h2>
+              
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat-box">
+              <div class="stat-label">Total clientes</div>
+              <div class="stat-number" id="totalClientes">0</div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-label">Nuevos del mes</div>
+              <div class="stat-number" id="nuevosMes">0</div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-label">Por ruta</div>
+              <div class="route-list" id="routeList"></div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:16px;" id="exportExcelBtn">📄 Exportar Excel</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <button class="nav-btn active" data-tab="registro">Agregar cliente</button>
+      <button class="nav-btn" data-tab="clientes">Clientes</button>
+      <button class="nav-btn" data-tab="vista">Resumen</button>
+    </div>
+  </nav>
+
+  <div class="modal" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title">Configuración</h3>
+          
+        </div>
+        <button class="close-btn" data-close="settingsModal">Cerrar</button>
       </div>
 
-      <section id="appView" class="screen hidden">
-        <div class="topbar">
-          <div class="brand">
-            <div class="brand-badge">CU</div>
-            <div>Café Urbano</div>
+      <div class="settings-options">
+        <button class="option-card" id="openUserModalBtn">
+          <div class="option-icon blue">👤</div>
+          <div class="option-body">
+            <div class="option-title">Usuario</div>
+            <p class="option-desc">Datos por defecto conectados a Sheets.</p>
           </div>
-          <button class="icon-btn" id="btnSalir" title="Cerrar sesión local" type="button">⌂</button>
-        </div>
+          <div class="arrow">›</div>
+        </button>
 
-        <div id="tabHome" class="tab-panel stack">
-          <div class="card hero">
-            
-            <h1 id="saludoNombre">Hola, cliente</h1>
-            <p id="heroText">Acumula 10 puntos y gana un café gratis.</p>
-            
-          </div>
-
-          
-            <div class="cups" id="cupsGrid"></div>
-            <div class="promo">
-              <div>
-                <strong id="promoTitle">Promoción base</strong>
-                <span id="promoSubtitle">Acumula 10 puntos y gana un café gratis.</span>
-              </div>
-              <div style="font-size:22px; color:var(--text); opacity:.9;">✦</div>
-            </div>
-          </div>
-
-          <div class="card qr-card">
-            <p class="eyebrow" style="margin-bottom:14px;">Tu QR personal</p>
-            <div class="qr-box">
-              <img id="qrImage" alt="QR del cliente" />
-            </div>
-            <strong style="display:block; font-size:18px; letter-spacing:-0.03em;">Muéstralo al finalizar tu compra</strong>
-            <p class="muted">El encargado lo escanea, valida el punto y tu progreso se actualiza en la tarjeta.</p>
-          </div>
-        </div>
-
-        <div id="tabMovimientos" class="tab-panel stack hidden">
-          <div class="section-title">
-            <h3>Movimientos recientes</h3>
-            <button class="mini-link" id="btnRefresh" type="button">Actualizar</button>
-          </div>
-
-          <div class="card">
-            <div id="movimientosList"></div>
-          </div>
-        </div>
-
-        <div id="tabPerfil" class="tab-panel stack hidden">
-          <div class="card">
-            <p class="eyebrow">Perfil</p>
-            <h3 style="margin:0; font-size:24px; letter-spacing:-0.04em;" id="perfilNombre">—</h3>
-            <p class="muted" style="margin-top:8px;">Esta cuenta está guardada en este dispositivo.</p>
-
-            <div class="mt-20 stack">
-              <div class="row-card">
-                <div class="row-left">
-                  <div class="row-icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
-                  <div>
-                    <strong>Teléfono</strong>
-                    <p id="perfilTelefono">—</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row-card">
-                <div class="row-left">
-                  <div class="row-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
-                  <div>
-                    <strong>Correo</strong>
-                    <p id="perfilCorreo">—</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row-card">
-                <div class="row-left">
-                  <div class="row-icon"><svg viewBox="0 0 24 24"><path d="M20 12l-8 8-10-10V2h8l10 10z"/><circle cx="7" cy="7" r="1.5"/></svg></div>
-                  <div>
-                    <strong>ID del cliente</strong>
-                    <p id="perfilId">—</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row-card">
-                <div class="row-left">
-                  <div class="row-icon"><svg viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17l-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3z"/></svg></div>
-                  <div>
-                    <strong>Estado del premio</strong>
-                    <p id="perfilPremio">Sin premio disponible</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <button class="secondary-btn" id="btnBorrarCuenta" type="button">Borrar cuenta de este dispositivo</button>
-          <p class="center-note">Esto solo elimina la sesión local del teléfono. No borra el cliente en la base de datos.</p>
-        </div>
-
-        <nav class="bottom-nav">
-          <button class="nav-btn active" data-tab="tabHome" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5.5 9.5V20h13V9.5"></path></svg>
-            <span>Inicio</span>
-          </button>
-          <button class="nav-btn" data-tab="tabMovimientos" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h8"></path><path d="M8 12h8"></path><path d="M8 17h5"></path><rect x="4" y="4" width="16" height="16" rx="4"></rect></svg>
-            <span>Movimientos</span>
-          </button>
-          <button class="nav-btn" data-tab="tabPerfil" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="8" r="4"></circle></svg>
-            <span>Perfil</span>
-          </button>
-        </nav>
-      </section>
+      </div>
     </div>
   </div>
 
+  <div class="modal" id="userModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title">Usuario</h3>
+          
+        </div>
+        <button class="close-btn" data-close="userModal">Cerrar</button>
+      </div>
+
+      <form id="userForm">
+        <div class="field">
+          <label for="user_centro">🏢 Centro</label>
+          <input class="input" id="user_centro" name="centro" />
+        </div>
+        <div class="field">
+          <label for="user_agencia">📍 Agencia</label>
+          <input class="input" id="user_agencia" name="agencia" />
+        </div>
+        <div class="field">
+          <label for="user_distrito">🧾 Distrito</label>
+          <input class="input" id="user_distrito" name="distrito" />
+        </div>
+        <div class="field">
+          <label for="user_promotora">👤 Promotora</label>
+          <input class="input" id="user_promotora" name="promotora" />
+        </div>
+        <button class="btn btn-primary" type="submit">💾 Guardar</button>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="modal" id="editModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title">Editar cliente</h3>
+          
+        </div>
+        <button class="close-btn" data-close="editModal">Cerrar</button>
+      </div>
+
+      <form id="editForm">
+        <input type="hidden" id="edit_id" />
+        <div class="field">
+          <label for="edit_codigo"># Código</label>
+          <input class="input" id="edit_codigo" />
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="edit_ruta">📍 Ruta</label>
+            <input class="input" id="edit_ruta" />
+          </div>
+          <div class="field">
+            <label for="edit_dia_visita">📅 Día visita</label>
+            <select class="select" id="edit_dia_visita">
+              <option value="1-Lunes">1-Lunes</option>
+                  <option value="2-Martes">2-Martes</option>
+                  <option value="3-Miércoles">3-Miércoles</option>
+                  <option value="4-Jueves">4-Jueves</option>
+                  <option value="5-Viernes">5-Viernes</option>
+                  <option value="6-Sábado">6-Sábado</option>
+                  <option value="7-Domingo">7-Domingo</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="edit_nombre_negocio">🏪 Nombre Negocio</label>
+          <input class="input" id="edit_nombre_negocio" />
+        </div>
+        <div class="field">
+          <label for="edit_direccion">🏢 Dirección</label>
+          <textarea class="textarea" id="edit_direccion"></textarea>
+        </div>
+        <div class="field">
+          <label for="edit_clasificacion">🏷 Clasificación PDV</label>
+          <input class="input" id="edit_clasificacion" />
+        </div>
+        <div class="grid-2">
+          <button class="btn btn-primary" type="submit">💾 Guardar</button>
+          <button class="btn btn-danger" type="button" id="deleteClientBtn">🗑 Borrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
   <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbwJjVizJZJ8tDyA7ESkdfIhaagZ1pEMTnvJpPny6HuhLDRoKwTJu06-L2ZpJVMVO4lR/exec';
-    const STORAGE_KEY = 'tarjetaLealtadCliente';
+    const APP_SCRIPT_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT";
+    const DAYS = [
+      "1-Lunes",
+      "2-Martes",
+      "3-Miércoles",
+      "4-Jueves",
+      "5-Viernes",
+      "6-Sábado",
+      "7-Domingo"
+    ];
 
-    const registerView = document.getElementById('registerView');
-    const appView = document.getElementById('appView');
-    const registerFeedback = document.getElementById('registerFeedback');
-    const btnCrearCuenta = document.getElementById('btnCrearCuenta');
-    const btnYaTengoCuenta = document.getElementById('btnYaTengoCuenta');
-    const btnIngresarCuenta = document.getElementById('btnIngresarCuenta');
-    const btnCerrarModal = document.getElementById('btnCerrarModal');
-    const btnCancelarModal = document.getElementById('btnCancelarModal');
-    const btnSalir = document.getElementById('btnSalir');
-    const btnRefresh = document.getElementById('btnRefresh');
-    const btnBorrarCuenta = document.getElementById('btnBorrarCuenta');
-    const loginModal = document.getElementById('loginModal');
-    const loginFeedback = document.getElementById('loginFeedback');
-    const loginIdCliente = document.getElementById('loginIdCliente');
-    const contactoInput = document.getElementById('contacto');
-    const nombreInput = document.getElementById('nombre');
-
-    const ui = {
-      saludoNombre: document.getElementById('saludoNombre'),
-      perfilNombre: document.getElementById('perfilNombre'),
-      perfilTelefono: document.getElementById('perfilTelefono'),
-      perfilCorreo: document.getElementById('perfilCorreo'),
-      perfilId: document.getElementById('perfilId'),
-      pointsCount: document.getElementById('pointsCount'),
-      goalCount: document.getElementById('goalCount'),
-
-      heroText: document.getElementById('heroText'),
-      faltanText: document.getElementById('faltanText'),
-      promoTitle: document.getElementById('promoTitle'),
-      promoSubtitle: document.getElementById('promoSubtitle'),
-      perfilPremio: document.getElementById('perfilPremio'),
-      qrImage: document.getElementById('qrImage'),
-      cupsGrid: document.getElementById('cupsGrid'),
-      movimientosList: document.getElementById('movimientosList')
+    const DEFAULT_USER = {
+      centro: "",
+      agencia: "",
+      distrito: "",
+      promotora: ""
     };
 
-    const state = {
-      cliente: null,
-      metaPuntos: 10,
-      recompensa: 'café gratis',
-      negocio: 'Café Urbano',
-      movimientos: []
+    const REQUIRED_EXPORT_COLUMNS = [
+      "Codigo",
+      "Centro",
+      "Agencia",
+      "Distrito",
+      "Ruta",
+      "Dia_visita",
+      "Orden",
+      "Nombre_Negocio",
+      "Direccion",
+      "Clasificacion",
+      "Promotora"
+    ];
+
+    let state = {
+      activeTab: "registro",
+      userDefaults: { ...DEFAULT_USER },
+      clients: [],
+      editId: null,
+      clientSearch: "",
+      loading: false
     };
 
-    function showRegister(message = '', type = 'error') {
-      registerView.classList.remove('hidden');
-      appView.classList.add('hidden');
-      closeLoginModal();
+    const toast = document.getElementById("toast");
+    const clientList = document.getElementById("clientList");
+    const clientSearchInput = document.getElementById("clientSearchInput");
+    const clientSearchInfo = document.getElementById("clientSearchInfo");
+    const routeList = document.getElementById("routeList");
+    const totalClientesEl = document.getElementById("totalClientes");
+    const nuevosMesEl = document.getElementById("nuevosMes");
+    const addClientForm = document.getElementById("addClientForm");
+    const editForm = document.getElementById("editForm");
+    const exportExcelBtn = document.getElementById("exportExcelBtn");
 
-      if (message) {
-        registerFeedback.textContent = message;
-        registerFeedback.className = `feedback ${type}`;
-        registerFeedback.classList.remove('hidden');
-      } else {
-        registerFeedback.textContent = '';
-        registerFeedback.className = 'feedback error hidden';
-        registerFeedback.classList.add('hidden');
-      }
+    function normalizeText(value) {
+      return String(value ?? "").trim();
     }
 
-    function showApp() {
-      registerView.classList.add('hidden');
-      appView.classList.remove('hidden');
-      closeLoginModal();
+    function makeId() {
+      return `${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
     }
 
-    function openLoginModal() {
-      loginModal.classList.remove('hidden');
-      loginFeedback.textContent = '';
-      loginFeedback.className = 'feedback error hidden';
-      loginIdCliente.value = '';
-      setTimeout(() => loginIdCliente.focus(), 50);
+    function normalizeBoolean(value) {
+      return value === true || String(value).toLowerCase() === "true" || String(value) === "1";
     }
 
-    function closeLoginModal() {
-      loginModal.classList.add('hidden');
-      loginFeedback.textContent = '';
-      loginFeedback.className = 'feedback error hidden';
-      loginIdCliente.value = '';
-    }
-
-    function showLoginFeedback(message, type = 'error') {
-      loginFeedback.textContent = message;
-      loginFeedback.className = `feedback ${type}`;
-      loginFeedback.classList.remove('hidden');
-    }
-
-    function saveLocalCliente(cliente) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(cliente));
-    }
-
-    function getLocalCliente() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-      } catch {
-        return null;
-      }
-    }
-
-    function clearLocalCliente() {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-
-    function clearFormInputs() {
-      if (nombreInput) nombreInput.value = '';
-      if (contactoInput) contactoInput.value = '';
-      if (loginIdCliente) loginIdCliente.value = '';
-    }
-
-    function safeText(value, fallback = '—') {
-      return value && String(value).trim() ? String(value).trim() : fallback;
-    }
-
-    function safeNumber(value, fallback = 0) {
-      const n = Number(value);
-      return Number.isFinite(n) ? n : fallback;
-    }
-
-    function formatDate(value) {
-      if (!value) return 'Sin movimientos todavía';
-      const date = new Date(value);
-      if (Number.isNaN(date.getTime())) return safeText(value, 'Sin fecha');
-
-      return date.toLocaleString('es-GT', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-    }
-
-    function buildQrData(id) {
-      const cleanId = safeText(id, '');
-      const targetUrl = `https://pjuanfrancisco700-lang.github.io/Confirmar_punto/?id=${encodeURIComponent(cleanId)}`;
-      return `https://api.qrserver.com/v1/create-qr-code/?size=420x420&data=${encodeURIComponent(targetUrl)}`;
-    }
-
-    function parseContacto(contacto) {
-      const value = String(contacto || '').trim();
+    function normalizeClient(raw) {
       return {
-        telefono: value && !value.includes('@') ? value : '',
-        correo: value && value.includes('@') ? value : ''
+        id: raw.id || makeId(),
+        codigo: normalizeText(raw.codigo || raw["Codigo Simple"] || raw.Codigo),
+        centro: normalizeText(raw.centro || raw["Centro"] || raw.Centro),
+        agencia: normalizeText(raw.agencia || raw["Agencia Actual"] || raw.Agencia),
+        distrito: normalizeText(raw.distrito || raw["Distrito"] || raw.Distrito),
+        ruta: normalizeText(raw.ruta || raw["Ruta Actual"] || raw.Ruta),
+        dia_visita: normalizeText(raw.dia_visita || raw["Dia visita"] || raw.Dia_visita),
+        orden: Number(raw.orden || raw["Orden"] || raw.Orden || 0),
+        nombre_negocio: normalizeText(raw.nombre_negocio || raw["Nombre Negocio"] || raw.Nombre_Negocio),
+        direccion: normalizeText(raw.direccion || raw["Direccion"] || raw.Direccion),
+        clasificacion: normalizeText(raw.clasificacion || raw["Clasificacion PDV"] || raw.Clasificacion),
+        promotora: normalizeText(raw.promotora || raw["Nombre promotora Visibilidad"] || raw.Promotora),
+        createdAt: raw.createdAt || new Date().toISOString(),
+        isNew: normalizeBoolean(raw.isNew)
       };
     }
 
-    function renderCups(points, goal) {
-      ui.cupsGrid.innerHTML = '';
-      const safeGoal = Math.max(1, safeNumber(goal, 10));
-      const safePoints = Math.max(0, safeNumber(points, 0));
-      const total = Math.max(safeGoal, 10);
+    function sortAndRecalculateOrders(clients) {
+      const grouped = new Map();
 
-      for (let i = 1; i <= total; i += 1) {
-        const item = document.createElement('div');
-        item.className = `cup ${i <= safePoints ? 'filled' : ''}`;
-        item.textContent = '☕';
-        ui.cupsGrid.appendChild(item);
-      }
-    }
-
-    function renderMovimientos() {
-      ui.movimientosList.innerHTML = '';
-
-      if (!Array.isArray(state.movimientos) || !state.movimientos.length) {
-        ui.movimientosList.innerHTML = `
-          <div class="row-card">
-            <div class="row-left">
-              <div class="row-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></div>
-              <div>
-                <strong>Aún no hay movimientos</strong>
-                <p>Cuando te marquen puntos aparecerán aquí.</p>
-              </div>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      state.movimientos.forEach((mov) => {
-        const row = document.createElement('div');
-        const isSuma = String(mov.tipo || '').toUpperCase() === 'SUMA';
-        row.className = 'row-card';
-        row.innerHTML = `
-          <div class="row-left">
-            <div class="row-icon">${isSuma ? '<svg viewBox="0 0 24 24"><path d="M3 8h13a4 4 0 0 1 0 8H3z"/><path d="M16 8V6a3 3 0 0 0-6 0v2"/></svg>' : '<svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8V4M8 4h8"/></svg>'}</div>
-            <div>
-              <strong>${isSuma ? 'Punto agregado' : 'Canje de recompensa'}</strong>
-              <p>${formatDate(mov.fecha)}</p>
-            </div>
-          </div>
-          <div class="pill">${isSuma ? '+1 punto' : 'Canje'}</div>
-        `;
-        ui.movimientosList.appendChild(row);
-      });
-    }
-
-    function renderCliente() {
-      const c = state.cliente;
-      if (!c) return;
-
-      const puntos = Math.max(0, safeNumber(c.puntos, 0));
-      const meta = Math.max(1, safeNumber(state.metaPuntos, 10));
-      const premioDisponible = String(c.premio_disponible || 'NO').toUpperCase() === 'SI';
-      const faltan = Math.max(0, meta - puntos);
-
-      ui.saludoNombre.textContent = `Hola, ${safeText(c.nombre, 'cliente')}`;
-      ui.perfilNombre.textContent = safeText(c.nombre);
-      ui.perfilTelefono.textContent = safeText(c.telefono, 'No registrado');
-      ui.perfilCorreo.textContent = safeText(c.correo, 'No registrado');
-      ui.perfilId.textContent = safeText(c.id_cliente);
-
-      ui.pointsCount.textContent = puntos;
-      ui.goalCount.textContent = meta;
-
-
-      ui.heroText.textContent = 'Tu tarjeta está activa.';
-
-      ui.faltanText.textContent = premioDisponible
-        ? 'Ya puedes reclamar tu recompensa en caja.'
-        : faltan === 0
-          ? 'Ya casi: tu recompensa está lista para activarse.'
-          : `Te faltan ${faltan} punto${faltan === 1 ? '' : 's'} para tu premio.`;
-
-      ui.promoTitle.textContent = premioDisponible ? 'Premio disponible' : 'Promoción base';
-      ui.promoSubtitle.textContent = premioDisponible
-        ? `Tienes un ${state.recompensa} listo para canjear.`
-        : `Acumula ${meta} puntos y gana un ${state.recompensa}.`;
-
-      ui.perfilPremio.textContent = premioDisponible
-        ? `Tienes un ${state.recompensa} disponible.`
-        : 'Sin premio disponible';
-
-      ui.qrImage.src = buildQrData(c.id_cliente);
-      ui.qrImage.alt = `QR de ${safeText(c.nombre, 'cliente')}`;
-
-      renderCups(puntos, meta);
-      renderMovimientos();
-    }
-
-    function setActiveTab(tabId) {
-      document.querySelectorAll('.tab-panel').forEach((panel) => {
-        panel.classList.toggle('hidden', panel.id !== tabId);
+      clients.forEach((item) => {
+        const ruta = normalizeText(item.ruta);
+        if (!grouped.has(ruta)) grouped.set(ruta, []);
+        grouped.get(ruta).push({ ...item });
       });
 
-      document.querySelectorAll('.nav-btn').forEach((btn) => {
-        btn.classList.toggle('active', btn.dataset.tab === tabId);
-      });
-    }
+      const routeKeys = Array.from(grouped.keys()).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+      const result = [];
 
-    async function apiRequest(params) {
-      const url = new URL(API_URL);
-      Object.entries(params).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== '') {
-          url.searchParams.set(key, value);
-        }
-      });
-
-      const response = await fetch(url.toString(), { method: 'GET' });
-      if (!response.ok) throw new Error('No se pudo conectar con el servicio.');
-      return response.json();
-    }
-
-    async function cargarClienteDesdeServidor(identificador) {
-      const data = await apiRequest({ action: 'getClientAny', input: identificador });
-      if (!data || data.ok === false || !data.cliente) {
-        throw new Error(data?.message || 'No encontramos esa cuenta.');
-      }
-
-      state.cliente = data.cliente;
-      state.movimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
-
-      try {
-        const dashboard = await apiRequest({ action: 'getDashboard' });
-        if (dashboard?.config) {
-          state.metaPuntos = safeNumber(dashboard.config.meta_puntos, 10);
-          state.recompensa = safeText(dashboard.config.recompensa, 'café gratis');
-          state.negocio = safeText(dashboard.config.nombre_negocio, 'Café Urbano');
-        }
-      } catch {
-        state.metaPuntos = 10;
-        state.recompensa = 'café gratis';
-        state.negocio = 'Café Urbano';
-      }
-
-      saveLocalCliente(state.cliente);
-      renderCliente();
-      showApp();
-      setActiveTab('tabHome');
-    }
-
-    async function crearCuenta() {
-      const nombre = safeText(nombreInput.value, '');
-      const contacto = safeText(contactoInput.value, '');
-
-      if (!nombre) {
-        showRegister('Ingresa tu nombre para crear tu tarjeta.');
-        nombreInput.focus();
-        return;
-      }
-
-      if (!contacto) {
-        showRegister('Ingresa tu teléfono o correo para crear tu tarjeta.');
-        contactoInput.focus();
-        return;
-      }
-
-      btnCrearCuenta.disabled = true;
-      btnCrearCuenta.textContent = 'Creando...';
-
-      try {
-        const { telefono, correo } = parseContacto(contacto);
-        const data = await apiRequest({
-          action: 'registerClient',
-          nombre,
-          telefono,
-          correo
+      routeKeys.forEach((ruta) => {
+        const routeItems = grouped.get(ruta).sort((a, b) => {
+          const oa = Number(a.orden || 0);
+          const ob = Number(b.orden || 0);
+          if (oa !== ob) return oa - ob;
+          return a.nombre_negocio.localeCompare(b.nombre_negocio);
         });
 
-        if (!data || data.ok === false || !data.cliente) {
-          throw new Error(data?.message || 'No se pudo crear la cuenta.');
-        }
+        routeItems.forEach((item, index) => {
+          result.push({ ...item, ruta, orden: index + 1 });
+        });
+      });
 
-        state.cliente = data.cliente;
-        state.movimientos = [];
+      return result;
+    }
 
-        try {
-          const dashboard = await apiRequest({ action: 'getDashboard' });
-          if (dashboard?.config) {
-            state.metaPuntos = safeNumber(dashboard.config.meta_puntos, 10);
-            state.recompensa = safeText(dashboard.config.recompensa, 'café gratis');
-            state.negocio = safeText(dashboard.config.nombre_negocio, 'Café Urbano');
-          }
-        } catch {
-          state.metaPuntos = 10;
-          state.recompensa = 'café gratis';
-          state.negocio = 'Café Urbano';
-        }
+    async function apiGet(action = "list") {
+      if (!APP_SCRIPT_URL || APP_SCRIPT_URL.includes("PEGA_AQUI")) {
+        throw new Error("Falta pegar la URL del Apps Script");
+      }
 
-        saveLocalCliente(state.cliente);
-        renderCliente();
-        showApp();
-        setActiveTab('tabHome');
-        clearFormInputs();
+      const url = `${APP_SCRIPT_URL}?action=${encodeURIComponent(action)}`;
+      const response = await fetch(url, { method: "GET" });
+      if (!response.ok) throw new Error("No se pudo leer Google Sheets");
+      const json = await response.json();
+      if (!json.ok) throw new Error(json.message || "Error de lectura");
+      return json.data;
+    }
+
+    async function apiPost(payload) {
+      if (!APP_SCRIPT_URL || APP_SCRIPT_URL.includes("PEGA_AQUI")) {
+        throw new Error("Falta pegar la URL del Apps Script");
+      }
+
+      const response = await fetch(APP_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error("No se pudo guardar en Google Sheets");
+      const json = await response.json();
+      if (!json.ok) throw new Error(json.message || "Error al guardar");
+      return json.data;
+    }
+
+    async function loadInitialData() {
+      try {
+        setLoading(true, "Conectando con Sheets...");
+        const [clients, userDefaults] = await Promise.all([
+          apiGet("list"),
+          apiGet("getuserdefaults")
+        ]);
+
+        state.clients = sortAndRecalculateOrders((clients || []).map(normalizeClient));
+        state.userDefaults = { ...DEFAULT_USER, ...(userDefaults || {}) };
+
+        renderAll(false);
+        showToast(`Base conectada: ${state.clients.length}`);
       } catch (error) {
-        showRegister(error.message || 'Ocurrió un error al crear la cuenta.');
+        console.error(error);
+        renderAll(false);
+        showToast(error.message || "No se pudo conectar con Sheets");
       } finally {
-        btnCrearCuenta.disabled = false;
-        btnCrearCuenta.textContent = 'Crear cuenta';
+        setLoading(false);
       }
     }
 
-    async function ingresarCuenta() {
-      const identificador = safeText(loginIdCliente.value, '');
-      if (!identificador) {
-        showLoginFeedback('Escribe tu teléfono, correo o ID para ingresar.');
-        loginIdCliente.focus();
+    function setLoading(isLoading, message = "Procesando...") {
+      state.loading = isLoading;
+      addClientForm.querySelectorAll("input, select, textarea, button").forEach(el => el.disabled = isLoading);
+      editForm.querySelectorAll("input, select, textarea, button").forEach(el => el.disabled = isLoading);
+      exportExcelBtn.disabled = isLoading;
+      if (isLoading) {
+        clientSearchInfo.textContent = message;
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2600);
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.add("show");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("show");
+    }
+
+    function switchTab(tab) {
+      state.activeTab = tab;
+      document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
+      document.getElementById(`screen-${tab}`).classList.add("active");
+      document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.tab === tab));
+    }
+
+    function getFilteredClients() {
+      const term = normalizeText(state.clientSearch).toLowerCase();
+      if (!term) return state.clients;
+
+      return state.clients.filter(client => {
+        const nombre = normalizeText(client.nombre_negocio).toLowerCase();
+        const codigo = normalizeText(client.codigo).toLowerCase();
+        const dia = normalizeText(client.dia_visita).toLowerCase();
+        const ruta = normalizeText(client.ruta).toLowerCase();
+        return nombre.includes(term) || codigo.includes(term) || dia.includes(term) || ruta.includes(term);
+      });
+    }
+
+    function renderClients() {
+      if (!state.clients.length) {
+        clientSearchInfo.textContent = state.loading ? "Conectando..." : "Sin clientes registrados";
+        clientList.innerHTML = `<div class="info-box" style="margin:0;">${state.loading ? "Cargando datos desde Google Sheets..." : "Sin clientes."}</div>`;
         return;
       }
 
-      btnIngresarCuenta.disabled = true;
-      btnIngresarCuenta.textContent = 'Ingresando...';
+      const filteredClients = getFilteredClients();
+      const term = normalizeText(state.clientSearch);
 
-      try {
-        await cargarClienteDesdeServidor(identificador);
-      } catch (error) {
-        showLoginFeedback(error.message || 'No se pudo recuperar la cuenta.');
-      } finally {
-        btnIngresarCuenta.disabled = false;
-        btnIngresarCuenta.textContent = 'Ingresar';
+      if (term) {
+        clientSearchInfo.textContent = filteredClients.length
+          ? `${filteredClients.length} resultado${filteredClients.length === 1 ? "" : "s"} para "${term}"`
+          : `Sin resultados para "${term}"`;
+      } else {
+        clientSearchInfo.textContent = `${state.clients.length} cliente${state.clients.length === 1 ? "" : "s"} en total`;
       }
-    }
 
-    async function refreshData() {
-      if (!state.cliente?.id_cliente) return;
-      btnRefresh.disabled = true;
-      btnRefresh.textContent = 'Actualizando...';
-
-      try {
-        await cargarClienteDesdeServidor(state.cliente.id_cliente);
-      } catch (error) {
-        alert(error.message || 'No se pudo actualizar la información.');
-      } finally {
-        btnRefresh.disabled = false;
-        btnRefresh.textContent = 'Actualizar';
-      }
-    }
-
-    function logoutLocal() {
-      state.cliente = null;
-      state.movimientos = [];
-      clearLocalCliente();
-      clearFormInputs();
-      showRegister();
-    }
-
-    async function bootstrap() {
-      const local = getLocalCliente();
-
-      if (!local || !local.id_cliente) {
-        showRegister();
+      if (!filteredClients.length) {
+        clientList.innerHTML = `<div class="info-box" style="margin:0;">No se encontraron clientes.</div>`;
         return;
       }
 
-      try {
-        await cargarClienteDesdeServidor(local.id_cliente);
-      } catch {
-        clearLocalCliente();
-        showRegister('Tu sesión local venció o cambió. Ingresa nuevamente.');
-      }
+      clientList.innerHTML = filteredClients.map(client => `
+        <div class="client-item">
+          <div class="pill-row">
+            <span class="pill">Ruta ${escapeHtml(client.ruta)}</span>
+            <span class="pill">Orden ${client.orden}</span>
+            <span class="pill">${escapeHtml(client.dia_visita)}</span>
+          </div>
+          <h3 class="client-name">${escapeHtml(client.nombre_negocio)}</h3>
+          <p class="client-meta">Código: ${escapeHtml(client.codigo)} · Centro: ${escapeHtml(client.centro)} · Agencia: ${escapeHtml(client.agencia)}</p>
+          <p class="client-address">${escapeHtml(client.direccion)}</p>
+          <p class="client-class">Clasificación: ${escapeHtml(client.clasificacion)} · Promotora: ${escapeHtml(client.promotora)}</p>
+          <div class="client-actions">
+            <button class="btn btn-secondary" onclick="openEditClient('${client.id}')">✏️ Editar</button>
+            <button class="btn btn-danger" onclick="deleteClient('${client.id}')">🗑 Borrar</button>
+          </div>
+        </div>
+      `).join("");
     }
 
-    btnCrearCuenta.addEventListener('click', crearCuenta);
-    btnYaTengoCuenta.addEventListener('click', openLoginModal);
-    btnIngresarCuenta.addEventListener('click', ingresarCuenta);
-    btnCerrarModal.addEventListener('click', closeLoginModal);
-    btnCancelarModal.addEventListener('click', closeLoginModal);
-    btnSalir.addEventListener('click', logoutLocal);
-    btnRefresh.addEventListener('click', refreshData);
-    btnBorrarCuenta.addEventListener('click', logoutLocal);
+    function renderSummary() {
+      const totalClientes = state.clients.length;
+      const porRutaMap = new Map();
+      const now = new Date();
+      const month = now.getMonth();
+      const year = now.getFullYear();
+      let nuevosMes = 0;
 
-    loginModal.addEventListener('click', (e) => {
-      if (e.target === loginModal) closeLoginModal();
+      state.clients.forEach(client => {
+        const ruta = client.ruta || "Sin ruta";
+        porRutaMap.set(ruta, (porRutaMap.get(ruta) || 0) + 1);
+
+        if (client.createdAt) {
+          const d = new Date(client.createdAt);
+          if (d.getMonth() === month && d.getFullYear() === year && client.isNew) nuevosMes += 1;
+        }
+      });
+
+      totalClientesEl.textContent = totalClientes;
+      nuevosMesEl.textContent = nuevosMes;
+
+      const porRuta = Array.from(porRutaMap.entries()).sort((a, b) => a[0].localeCompare(b[0], undefined, { numeric: true }));
+      routeList.innerHTML = porRuta.length
+        ? porRuta.map(([ruta, total]) => `<div class="route-item"><span>Ruta ${escapeHtml(ruta)}</span><strong>${total}</strong></div>`).join("")
+        : `<p class="client-meta" style="margin:0;">Sin datos.</p>`;
+    }
+
+    function renderUserDefaults() {
+      document.getElementById("user_centro").value = state.userDefaults.centro || "";
+      document.getElementById("user_agencia").value = state.userDefaults.agencia || "";
+      document.getElementById("user_distrito").value = state.userDefaults.distrito || "";
+      document.getElementById("user_promotora").value = state.userDefaults.promotora || "";
+    }
+
+    function renderAll(repaint = true) {
+      renderClients();
+      renderSummary();
+      renderUserDefaults();
+      if (repaint) renderClients();
+    }
+
+    function validateClientForm(data) {
+      if (!normalizeText(data.codigo)) return "Ingresa código";
+      if (!normalizeText(data.ruta)) return "Ingresa ruta";
+      if (!normalizeText(data.dia_visita)) return "Selecciona un día";
+      if (!normalizeText(data.nombre_negocio)) return "Ingresa negocio";
+      if (!normalizeText(data.direccion)) return "Ingresa dirección";
+      if (!normalizeText(data.clasificacion)) return "Ingresa clasificación";
+      return "";
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function openEditClient(id) {
+      const client = state.clients.find(item => item.id === id);
+      if (!client) return;
+      state.editId = id;
+      document.getElementById("edit_id").value = client.id;
+      document.getElementById("edit_codigo").value = client.codigo;
+      document.getElementById("edit_ruta").value = client.ruta;
+      document.getElementById("edit_dia_visita").value = client.dia_visita;
+      document.getElementById("edit_nombre_negocio").value = client.nombre_negocio;
+      document.getElementById("edit_direccion").value = client.direccion;
+      document.getElementById("edit_clasificacion").value = client.clasificacion;
+      openModal("editModal");
+    }
+    window.openEditClient = openEditClient;
+
+    async function deleteClient(id) {
+      try {
+        setLoading(true, "Eliminando...");
+        const clients = await apiPost({ action: "delete", id });
+        state.clients = sortAndRecalculateOrders((clients || []).map(normalizeClient));
+        if (state.editId === id) closeModal("editModal");
+        renderAll(false);
+        showToast("Cliente eliminado");
+      } catch (error) {
+        console.error(error);
+        showToast(error.message || "No se pudo eliminar");
+      } finally {
+        setLoading(false);
+      }
+    }
+    window.deleteClient = deleteClient;
+
+    function exportToExcel(clients) {
+      const getDayIndex = (day) => {
+        const normalizedDay = normalizeText(day)
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+
+        const cleanDay = normalizedDay.includes("-")
+          ? normalizedDay.split("-").slice(1).join("-").trim()
+          : normalizedDay;
+
+        const dayMap = {
+          lunes: 0,
+          martes: 1,
+          miercoles: 2,
+          jueves: 3,
+          viernes: 4,
+          sabado: 5,
+          domingo: 6
+        };
+
+        if (cleanDay in dayMap) return dayMap[cleanDay];
+        if (normalizedDay in dayMap) return dayMap[normalizedDay];
+        return 999;
+      };
+
+      const exportClients = [...clients].sort((a, b) => {
+        const routeCompare = normalizeText(a.ruta).localeCompare(normalizeText(b.ruta), undefined, { numeric: true });
+        if (routeCompare !== 0) return routeCompare;
+
+        const dayCompare = getDayIndex(a.dia_visita) - getDayIndex(b.dia_visita);
+        if (dayCompare !== 0) return dayCompare;
+
+        const orderCompare = Number(a.orden || 0) - Number(b.orden || 0);
+        if (orderCompare !== 0) return orderCompare;
+
+        return normalizeText(a.nombre_negocio).localeCompare(normalizeText(b.nombre_negocio));
+      });
+
+      const rows = exportClients.map((item) => ({
+        Codigo: item.codigo,
+        Centro: item.centro,
+        Agencia: item.agencia,
+        Distrito: item.distrito,
+        Ruta: item.ruta,
+        Dia_visita: item.dia_visita,
+        Orden: item.orden,
+        Nombre_Negocio: item.nombre_negocio,
+        Direccion: item.direccion,
+        Clasificacion: item.clasificacion,
+        Promotora: item.promotora
+      }));
+
+      const HEADER_LABELS = {
+        Codigo: "CODIGO SIMPLE",
+        Centro: "CENTRO",
+        Agencia: "AGENCIA ACTUAL",
+        Distrito: "DISTRITO",
+        Ruta: "RUTA ACTUAL",
+        Dia_visita: "DIA VISITA",
+        Orden: "ORDEN",
+        Nombre_Negocio: "NOMBRE NEGOCIO",
+        Direccion: "DIRECCION",
+        Clasificacion: "CLASIFICACION PDV",
+        Promotora: "NOMBRE PROMOTORA VISIBILIDAD"
+      };
+
+      const sheetData = [
+        REQUIRED_EXPORT_COLUMNS.map((key) => HEADER_LABELS[key] || String(key).toUpperCase()),
+        ...rows.map((row) => REQUIRED_EXPORT_COLUMNS.map((key) => row[key] ?? ""))
+      ];
+
+      const worksheet = XLSX.utils.aoa_to_sheet(sheetData);
+      const workbook = XLSX.utils.book_new();
+
+      const redColumns = new Set(["Codigo"]);
+      const centerColumns = new Set(["Codigo", "Centro", "Agencia", "Distrito", "Ruta", "Dia_visita", "Orden", "Clasificacion"]);
+      const borderColor = "B7C3CC";
+      const headerBlue = "B7D7E5";
+      const headerRed = "FF1A12";
+      const headerTextDark = "111827";
+      const headerTextLight = "FFFFFF";
+
+      const range = XLSX.utils.decode_range(
+        worksheet["!ref"] || `A1:${XLSX.utils.encode_cell({ r: 0, c: REQUIRED_EXPORT_COLUMNS.length - 1 })}`
+      );
+
+      const getTextLength = (value) => {
+        if (value == null) return 0;
+        return String(value)
+          .split(/\r?\n/)
+          .reduce((max, line) => Math.max(max, line.length), 0);
+      };
+
+      const makeBorder = (rgb) => ({
+        top: { style: "thin", color: { rgb } },
+        right: { style: "thin", color: { rgb } },
+        bottom: { style: "thin", color: { rgb } },
+        left: { style: "thin", color: { rgb } }
+      });
+
+      for (let col = range.s.c; col <= range.e.c; col++) {
+        const headerAddress = XLSX.utils.encode_cell({ r: 0, c: col });
+        const headerCell = worksheet[headerAddress];
+        const key = REQUIRED_EXPORT_COLUMNS[col] || "";
+        const isRed = redColumns.has(key);
+
+        if (headerCell) {
+          headerCell.s = {
+            font: {
+              bold: true,
+              color: { rgb: isRed ? headerTextLight : headerTextDark },
+              sz: 12,
+              name: "Arial"
+            },
+            fill: { fgColor: { rgb: isRed ? headerRed : headerBlue } },
+            alignment: {
+              horizontal: "center",
+              vertical: "center",
+              wrapText: true
+            },
+            border: makeBorder(borderColor)
+          };
+        }
+
+        for (let rowIndex = 1; rowIndex <= range.e.r; rowIndex++) {
+          const cellAddress = XLSX.utils.encode_cell({ r: rowIndex, c: col });
+          const cell = worksheet[cellAddress];
+          if (!cell) continue;
+
+          cell.s = {
+            font: {
+              color: { rgb: "1F2937" },
+              sz: 11,
+              name: "Arial"
+            },
+            fill: { fgColor: { rgb: rowIndex % 2 === 0 ? "FFFFFF" : "F8FAFC" } },
+            alignment: {
+              horizontal: centerColumns.has(key) ? "center" : "left",
+              vertical: "center",
+              wrapText: true
+            },
+            border: makeBorder("D5DEE5")
+          };
+        }
+      }
+
+      worksheet["!rows"] = [{ hpt: 34 }, ...rows.map(() => ({ hpt: 22 }))];
+      worksheet["!autofilter"] = { ref: worksheet["!ref"] };
+      worksheet["!cols"] = REQUIRED_EXPORT_COLUMNS.map((key) => {
+        const headerLength = getTextLength(HEADER_LABELS[key] || key);
+        const maxContentLength = rows.reduce((max, row) => Math.max(max, getTextLength(row[key])), 0);
+        const largest = Math.max(headerLength, maxContentLength);
+
+        if (key === "Direccion") return { wch: Math.min(Math.max(largest + 4, 20), 42) };
+        if (key === "Nombre_Negocio") return { wch: Math.min(Math.max(largest + 4, 18), 30) };
+        if (key === "Promotora") return { wch: Math.min(Math.max(largest + 4, 20), 28) };
+        return { wch: Math.min(Math.max(largest + 3, 12), 22) };
+      });
+
+      XLSX.utils.book_append_sheet(workbook, worksheet, "EXELdatos");
+      XLSX.writeFile(workbook, `EXELdatos_${new Date().toISOString().slice(0, 10)}.xlsx`);
+    }
+
+    document.getElementById("openSettingsBtn").addEventListener("click", () => openModal("settingsModal"));
+    document.getElementById("openUserModalBtn").addEventListener("click", () => {
+      closeModal("settingsModal");
+      openModal("userModal");
     });
 
-    document.querySelectorAll('.nav-btn').forEach((btn) => {
-      btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
+    document.querySelectorAll("[data-close]").forEach(btn => {
+      btn.addEventListener("click", () => closeModal(btn.dataset.close));
     });
 
-    [nombreInput, contactoInput].forEach((input) => {
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') crearCuenta();
+    document.querySelectorAll(".modal").forEach(modal => {
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) modal.classList.remove("show");
       });
     });
 
-    loginIdCliente.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') ingresarCuenta();
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => switchTab(btn.dataset.tab));
     });
 
-    bootstrap();
+    clientSearchInput.addEventListener("input", (e) => {
+      state.clientSearch = e.target.value;
+      renderClients();
+    });
+
+    document.getElementById("userForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const userDefaults = {
+        centro: normalizeText(document.getElementById("user_centro").value),
+        agencia: normalizeText(document.getElementById("user_agencia").value),
+        distrito: normalizeText(document.getElementById("user_distrito").value),
+        promotora: normalizeText(document.getElementById("user_promotora").value)
+      };
+
+      try {
+        setLoading(true, "Guardando usuario...");
+        const saved = await apiPost({
+          action: "saveuserdefaults",
+          userDefaults
+        });
+        state.userDefaults = { ...DEFAULT_USER, ...(saved || userDefaults) };
+        renderUserDefaults();
+        closeModal("userModal");
+        showToast("Usuario guardado");
+      } catch (error) {
+        console.error(error);
+        showToast(error.message || "No se pudo guardar usuario");
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    document.getElementById("addClientForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        codigo: document.getElementById("codigo").value,
+        ruta: document.getElementById("ruta").value,
+        dia_visita: document.getElementById("dia_visita").value,
+        nombre_negocio: document.getElementById("nombre_negocio").value,
+        direccion: document.getElementById("direccion").value,
+        clasificacion: document.getElementById("clasificacion").value
+      };
+
+      const error = validateClientForm(data);
+      if (error) {
+        showToast(error);
+        return;
+      }
+
+      const newClient = {
+        codigo: data.codigo,
+        centro: state.userDefaults.centro,
+        agencia: state.userDefaults.agencia,
+        distrito: state.userDefaults.distrito,
+        ruta: data.ruta,
+        dia_visita: data.dia_visita,
+        nombre_negocio: data.nombre_negocio,
+        direccion: data.direccion,
+        clasificacion: data.clasificacion,
+        promotora: state.userDefaults.promotora,
+        orden: Number.MAX_SAFE_INTEGER
+      };
+
+      try {
+        setLoading(true, "Guardando cliente...");
+        const clients = await apiPost({
+          action: "add",
+          client: newClient
+        });
+
+        state.clients = sortAndRecalculateOrders((clients || []).map(normalizeClient));
+        renderAll(false);
+        e.target.reset();
+        document.getElementById("dia_visita").value = "1-Lunes";
+        showToast("Cliente agregado");
+      } catch (error) {
+        console.error(error);
+        showToast(error.message || "No se pudo agregar");
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    document.getElementById("editForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const updated = {
+        id: document.getElementById("edit_id").value,
+        codigo: document.getElementById("edit_codigo").value,
+        ruta: document.getElementById("edit_ruta").value,
+        dia_visita: document.getElementById("edit_dia_visita").value,
+        nombre_negocio: document.getElementById("edit_nombre_negocio").value,
+        direccion: document.getElementById("edit_direccion").value,
+        clasificacion: document.getElementById("edit_clasificacion").value
+      };
+
+      const error = validateClientForm(updated);
+      if (error) {
+        showToast(error);
+        return;
+      }
+
+      try {
+        setLoading(true, "Actualizando cliente...");
+        const clients = await apiPost({
+          action: "update",
+          client: updated
+        });
+
+        state.clients = sortAndRecalculateOrders((clients || []).map(normalizeClient));
+        renderAll(false);
+        closeModal("editModal");
+        showToast("Cliente actualizado");
+      } catch (error) {
+        console.error(error);
+        showToast(error.message || "No se pudo actualizar");
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    document.getElementById("deleteClientBtn").addEventListener("click", async () => {
+      const id = document.getElementById("edit_id").value;
+      if (!id) return;
+      await deleteClient(id);
+    });
+
+    document.getElementById("exportExcelBtn").addEventListener("click", () => {
+      exportToExcel(state.clients);
+    });
+
+    renderAll(false);
+    switchTab("registro");
+    document.getElementById("dia_visita").value = "1-Lunes";
+    loadInitialData();
   </script>
 </body>
 </html>
