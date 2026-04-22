@@ -1087,6 +1087,9 @@
     window.openEditClient = openEditClient;
 
     async function deleteClient(id) {
+      const confirmado = window.confirm("¿Estás seguro que deseas borrar este cliente?");
+      if (!confirmado) return;
+
       try {
         setLoading(true, "Eliminando...");
         const clients = await apiPost({ action: "delete", id });
