@@ -530,7 +530,6 @@
             <div class="section-icon blue">＋</div>
             <div>
               <h2 class="section-title">Agregar cliente</h2>
-              
             </div>
           </div>
 
@@ -589,7 +588,6 @@
             <div class="section-icon green">👥</div>
             <div>
               <h2 class="section-title">Clientes</h2>
-              
             </div>
           </div>
 
@@ -611,7 +609,6 @@
             <div class="section-icon violet">📊</div>
             <div>
               <h2 class="section-title">Resumen</h2>
-              
             </div>
           </div>
 
@@ -651,7 +648,6 @@
       <div class="modal-head">
         <div>
           <h3 class="modal-title">Configuración</h3>
-          
         </div>
         <button class="close-btn" data-close="settingsModal">Cerrar</button>
       </div>
@@ -665,7 +661,6 @@
           </div>
           <div class="arrow">›</div>
         </button>
-
       </div>
     </div>
   </div>
@@ -675,7 +670,6 @@
       <div class="modal-head">
         <div>
           <h3 class="modal-title">Usuario</h3>
-          
         </div>
         <button class="close-btn" data-close="userModal">Cerrar</button>
       </div>
@@ -702,13 +696,11 @@
     </div>
   </div>
 
-
   <div class="modal" id="editModal">
     <div class="modal-box">
       <div class="modal-head">
         <div>
           <h3 class="modal-title">Editar cliente</h3>
-          
         </div>
         <button class="close-btn" data-close="editModal">Cerrar</button>
       </div>
@@ -728,12 +720,12 @@
             <label for="edit_dia_visita">📅 Día visita</label>
             <select class="select" id="edit_dia_visita">
               <option value="1-Lunes">1-Lunes</option>
-                  <option value="2-Martes">2-Martes</option>
-                  <option value="3-Miércoles">3-Miércoles</option>
-                  <option value="4-Jueves">4-Jueves</option>
-                  <option value="5-Viernes">5-Viernes</option>
-                  <option value="6-Sábado">6-Sábado</option>
-                  <option value="7-Domingo">7-Domingo</option>
+              <option value="2-Martes">2-Martes</option>
+              <option value="3-Miércoles">3-Miércoles</option>
+              <option value="4-Jueves">4-Jueves</option>
+              <option value="5-Viernes">5-Viernes</option>
+              <option value="6-Sábado">6-Sábado</option>
+              <option value="7-Domingo">7-Domingo</option>
             </select>
           </div>
         </div>
@@ -757,9 +749,14 @@
     </div>
   </div>
 
-
   <script>
     const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwptPC80lyu_i6nM3eDqavkLrnVRQNGCKWmfecyqL-5mJAuE4DkR_dETXRIQT-Uc7o/exec";
+    const CACHE_KEYS = {
+      clients: "gestor_base_cache_clients_v1",
+      userDefaults: "gestor_base_cache_user_defaults_v1",
+      lastSync: "gestor_base_cache_last_sync_v1"
+    };
+
     const DAYS = [
       "1-Lunes",
       "2-Martes",
@@ -870,6 +867,42 @@
       return result;
     }
 
+    function saveCache() {
+      try {
+        localStorage.setItem(CACHE_KEYS.clients, JSON.stringify(state.clients));
+        localStorage.setItem(CACHE_KEYS.userDefaults, JSON.stringify(state.userDefaults));
+        localStorage.setItem(CACHE_KEYS.lastSync, new Date().toISOString());
+      } catch (error) {
+        console.warn("No se pudo guardar caché local", error);
+      }
+    }
+
+    function loadCache() {
+      try {
+        const cachedClientsRaw = localStorage.getItem(CACHE_KEYS.clients);
+        const cachedUserRaw = localStorage.getItem(CACHE_KEYS.userDefaults);
+
+        const cachedClients = cachedClientsRaw ? JSON.parse(cachedClientsRaw) : [];
+        const cachedUserDefaults = cachedUserRaw ? JSON.parse(cachedUserRaw) : null;
+
+        if (Array.isArray(cachedClients) && cachedClients.length) {
+          state.clients = sortAndRecalculateOrders(cachedClients.map(normalizeClient));
+        }
+
+        if (cachedUserDefaults && typeof cachedUserDefaults === "object") {
+          state.userDefaults = { ...DEFAULT_USER, ...cachedUserDefaults };
+        }
+
+        return Boolean(
+          (Array.isArray(cachedClients) && cachedClients.length) ||
+          (cachedUserDefaults && typeof cachedUserDefaults === "object")
+        );
+      } catch (error) {
+        console.warn("No se pudo leer caché local", error);
+        return false;
+      }
+    }
+
     async function apiGet(action = "list") {
       if (!APP_SCRIPT_URL || APP_SCRIPT_URL.includes("PEGA_AQUI")) {
         throw new Error("Falta pegar la URL del Apps Script");
@@ -901,8 +934,18 @@
     }
 
     async function loadInitialData() {
+      const hasCache = loadCache();
+
+      if (hasCache) {
+        renderAll(false);
+        const lastSync = localStorage.getItem(CACHE_KEYS.lastSync);
+        if (lastSync) {
+          showToast(`Cargado desde caché local`);
+        }
+      }
+
       try {
-        setLoading(true, "Conectando con Sheets...");
+        setLoading(true, hasCache ? "Sincronizando con Sheets..." : "Conectando con Sheets...");
         const [clients, userDefaults] = await Promise.all([
           apiGet("list"),
           apiGet("getuserdefaults")
@@ -910,13 +953,14 @@
 
         state.clients = sortAndRecalculateOrders((clients || []).map(normalizeClient));
         state.userDefaults = { ...DEFAULT_USER, ...(userDefaults || {}) };
+        saveCache();
 
         renderAll(false);
         showToast(`Base conectada: ${state.clients.length}`);
       } catch (error) {
         console.error(error);
         renderAll(false);
-        showToast(error.message || "No se pudo conectar con Sheets");
+        showToast(hasCache ? "Mostrando datos guardados localmente" : (error.message || "No se pudo conectar con Sheets"));
       } finally {
         setLoading(false);
       }
@@ -1094,6 +1138,7 @@
         setLoading(true, "Eliminando...");
         const clients = await apiPost({ action: "delete", id });
         state.clients = sortAndRecalculateOrders((clients || []).map(normalizeClient));
+        saveCache();
         if (state.editId === id) closeModal("editModal");
         renderAll(false);
         showToast("Cliente eliminado");
@@ -1312,6 +1357,7 @@
           userDefaults
         });
         state.userDefaults = { ...DEFAULT_USER, ...(saved || userDefaults) };
+        saveCache();
         renderUserDefaults();
         closeModal("userModal");
         showToast("Usuario guardado");
@@ -1363,6 +1409,7 @@
         });
 
         state.clients = sortAndRecalculateOrders((clients || []).map(normalizeClient));
+        saveCache();
         renderAll(false);
         e.target.reset();
         document.getElementById("dia_visita").value = "1-Lunes";
@@ -1402,6 +1449,7 @@
         });
 
         state.clients = sortAndRecalculateOrders((clients || []).map(normalizeClient));
+        saveCache();
         renderAll(false);
         closeModal("editModal");
         showToast("Cliente actualizado");
